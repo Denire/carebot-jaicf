@@ -2,6 +2,11 @@ package com.justai.jaicf.template.scenario
 
 import com.justai.jaicf.model.scenario.Scenario
 
+fun selectQuestion(): String {
+    val questions = mutableListOf("Napoleon", "Supermarket")
+    return questions.shuffled().take(1)[0]
+}
+
 object MainScenario : Scenario() {
 
     init {
@@ -19,7 +24,28 @@ object MainScenario : Scenario() {
                 intent("Obsession")
             }
             action {
-                reactions.say("Марк, давай поговорим об этом позже.")
+                reactions.sayRandom("Марк, давай поговорим об этом позже.", "Об этом я тебе еще расскажу.")
+                reactions.go("/Ask")
+            }
+        }
+
+        state("Ask") {
+            action {
+                val question = selectQuestion()
+                reactions.go(question)
+            }
+
+            state("Napoleon") {
+                action {
+		            reactions.say("А сейчас скажи, что тебе больше нравится: Медовик или Наполеон?")
+                }
+            }
+
+            state("Supermarket") {
+                action {
+                    reactions.say("А сейчас давай поиграем.")
+                    reactions.say("Вот ты приходишь в магазин и например я продавец. Ты должен что-то купить, например, мама или папа тебя попросили: у нас закончились хлеб и молоко, сходи купи пожалуйста в магазин.")
+                }
             }
         }
 
