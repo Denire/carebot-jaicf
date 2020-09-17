@@ -14,13 +14,32 @@ object MainScenario : Scenario() {
             }
         }
 
+        state("Obsession") {
+            activators {
+                intent("Obsession")
+            }
+            action {
+                reactions.say("Марк, давай поговорим об этом позже.")
+            }
+        }
+
         state("Hello") {
             activators {
                 intent("Hello")
             }
 
             action {
-                reactions.say("Hi there!")
+                reactions.say("Hi ther!")
+            }
+        }
+
+        state("Time") {
+            activators {
+                intent("Time")
+            }
+
+            action {
+                reactions.say("Самое время!")
             }
         }
 
