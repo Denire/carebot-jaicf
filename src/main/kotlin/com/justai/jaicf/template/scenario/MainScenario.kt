@@ -3,7 +3,7 @@ package com.justai.jaicf.template.scenario
 import com.justai.jaicf.model.scenario.Scenario
 
 fun selectQuestion(): String {
-    val questions = mutableListOf("Napoleon", "Supermarket")
+    val questions = mutableListOf("Cakes", "Supermarket")
     return questions.shuffled().take(1)[0]
 }
 
@@ -35,9 +35,18 @@ object MainScenario : Scenario() {
                 reactions.go(question)
             }
 
-            state("Napoleon") {
+            state("Cakes") {
                 action {
 		            reactions.say("А сейчас скажи, что тебе больше нравится: Медовик или Наполеон?")
+                }
+
+                state("Napoleon") {
+                    activators {
+                        intent("Answer:Napoleon")
+                    }
+                    action {
+                        reactions.say("Ммм да, это вкусно!")
+                    }
                 }
             }
 
