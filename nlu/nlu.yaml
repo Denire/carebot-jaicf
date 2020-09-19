@@ -1,0 +1,14 @@
+version: "2.0"
+
+nlu:
+- intent: Answer/Napoleon
+  examples: |
+    - Я наполеон люблю есть по утрам
+    - Hi
+    - hey there [SarAnswer-Napoleonme)
+
+- intent: faq/language
+  examples: |
+    - What language do you speak?
+    - Do you only handle english?
+
