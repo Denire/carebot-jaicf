@@ -1,5 +1,6 @@
 package com.justai.jaicf.template.scenario
 
+import com.justai.jaicf.channel.aimybox.AimyboxEvent
 import com.justai.jaicf.model.scenario.Scenario
 
 fun selectQuestion(): String {
@@ -12,10 +13,10 @@ object MainScenario : Scenario() {
     init {
         state("Start") {
             globalActivators {
-                regex("/start")
+                event(AimyboxEvent.START)
             }
             action {
-                reactions.say("So let's begin!")
+                reactions.say("Ну что, начнем! Спроси у меня что-нибудь.")
             }
         }
 
