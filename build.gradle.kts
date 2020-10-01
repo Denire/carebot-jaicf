@@ -13,7 +13,8 @@ val ktor = "1.3.1"
 
 // Main class to run application on heroku. Either PollingConnectionKt, or WebhookConnectionKt
 application {
-    mainClassName = "com.justai.jaicf.template.connections.AimyboxConnectionKt"
+    mainClassName = "com.justai.jaicf.template.connections.AimyboxAndWebhookConnectionKt"
+
 }
 
 repositories {
