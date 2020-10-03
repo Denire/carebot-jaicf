@@ -28,8 +28,7 @@ object MainScenario : Scenario() {
             }
             action {
                 reactions.sayRandom("Марк, давай поговорим об этом позже.", "Об этом я тебе еще расскажу.")
-                reactions.aimybox?.buttons(UrlButton("Open websitte", "http://geoassistant.ru"))
-                reactions.go("/Ask")
+                reactions.go("/Initiate")
             }
         }
 
@@ -71,9 +70,19 @@ object MainScenario : Scenario() {
                         intent("Answer:Napoleon")
                     }
                     action {
-                        reactions.say("Ммм да, это вкусно!")
+                        reactions.say("Да, это вкусно!")
                     }
                 }
+
+                state("Medovik") {
+                    activators {
+                        intent("Answer:Medovik")
+                    }
+                    action {
+                        reactions.say("Да, он ничего. Но Наполеон мне все-таки как-то больше по душе.")
+                    }
+                }
+                fallback { reactions.say("Я такого, кажется, не пробовала.") }
             }
 
             state("Supermarket") {
@@ -86,9 +95,10 @@ object MainScenario : Scenario() {
                     counter += 1
                     println(counter)
                     if (counter > 3) {
+                        counter = 0
                         reactions.go("../Cashier")
                     } else {
-                        reactions.sayRandom("угу", "мхм", "что дальше?", "а дальше что?")
+                        reactions.sayRandom("угу", "что дальше?", "а дальше что?")
                     }
 
                 }
@@ -97,13 +107,16 @@ object MainScenario : Scenario() {
                     action { reactions.say("Хорошо. а на кассе ты что говоришь?") }
                     fallback { reactions.go("../1") }
                     state("1") {
-                        action { reactions.say("Марк, ну допустим вот я продавец, да? и если у тебя не хватает денег и ты взял молоко дороже, чем у тебя есть денег, и я говорю \"у вас не хватает ээ 15 рублей\".") }
+                        action { reactions.say("Марк, ну допустим вот я продавец, да? и если у тебя не хватает денег и ты взял молоко дороже, чем у тебя есть денег, и я говорю \"у вас не хватает 15 рублей\".") }
                         fallback { reactions.go("../2") }
                         state("2") {
                             action { reactions.say("А если ты уже на кассе. Там за тобой стоят люди, они ждут, пока ты оплатишь покупку. Пожалуйста, оплатите покупку, не задерживайте остальных людей.") }
                             fallback { reactions.go("../end") }
                             state("end") {
-                                action { reactions.say("Правильный ответ - это отойти от кассы, взять другое молоко и купить его.") }
+                                action {
+                                    reactions.say("Правильный ответ - это отойти от кассы, взять другое молоко и купить его.")
+                                    reactions.go("/Reward")
+                                }
                             }
                         }
                     }
