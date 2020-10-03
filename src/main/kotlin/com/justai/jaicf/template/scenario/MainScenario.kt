@@ -1,6 +1,7 @@
 package com.justai.jaicf.template.scenario
 
 import com.justai.jaicf.channel.aimybox.AimyboxEvent
+import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.model.scenario.Scenario
 
 fun selectQuestion(): String {
@@ -25,7 +26,10 @@ object MainScenario : Scenario() {
                 intent("Obsession")
             }
             action {
-                reactions.sayRandom("Марк, давай поговорим об этом позже.", "Об этом я тебе еще расскажу.")
+//                reactions.sayRandom("Марк, давай поговорим об этом позже.", "Об этом я тебе еще расскажу.")
+                reactions.say("<phoneme alphabet=\"ipa\" ph=\"məlɐko\">молоко</phoneme> или <phoneme alphabet=\"ipa\" ph=\"məl\">молоко</phoneme>")
+                reactions.aimybox?.say("молоко", "<phoneme alphabet=\"ipa\" ph=\"məlɐko\">молоко</phoneme> или <phoneme alphabet=\"ipa\" ph=\"məl\">молоко</phoneme>")
+                reactions.aimybox?.image("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg")
                 reactions.go("/Ask")
             }
         }
