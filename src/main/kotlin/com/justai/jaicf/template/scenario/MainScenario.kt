@@ -2,6 +2,7 @@ package com.justai.jaicf.template.scenario
 
 import com.justai.jaicf.channel.aimybox.AimyboxEvent
 import com.justai.jaicf.channel.aimybox.aimybox
+import com.justai.jaicf.channel.aimybox.api.UrlButton
 import com.justai.jaicf.model.scenario.Scenario
 
 fun selectQuestion(): String {
@@ -26,10 +27,8 @@ object MainScenario : Scenario() {
                 intent("Obsession")
             }
             action {
-//                reactions.sayRandom("Марк, давай поговорим об этом позже.", "Об этом я тебе еще расскажу.")
-                reactions.say("<phoneme alphabet=\"ipa\" ph=\"məlɐko\">молоко</phoneme> или <phoneme alphabet=\"ipa\" ph=\"məl\">молоко</phoneme>")
-                reactions.aimybox?.say("молоко", "<phoneme alphabet=\"ipa\" ph=\"məlɐko\">молоко</phoneme> или <phoneme alphabet=\"ipa\" ph=\"məl\">молоко</phoneme>")
-                reactions.aimybox?.image("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg")
+                reactions.sayRandom("Марк, давай поговорим об этом позже.", "Об этом я тебе еще расскажу.")
+                reactions.aimybox?.buttons(UrlButton("Open websitte", "http://geoassistant.ru"))
                 reactions.go("/Ask")
             }
         }
@@ -64,7 +63,7 @@ object MainScenario : Scenario() {
 
             state("Cakes") {
                 action {
-		            reactions.say("А сейчас скажи, что тебе больше нравится: Медовик или Наполеон?")
+		            reactions.say("Вот скажи мне, что тебе больше нравится: Медовик или Наполеон?")
                 }
 
                 state("Napoleon") {
@@ -112,13 +111,17 @@ object MainScenario : Scenario() {
             }
         }
 
-        state("Hello") {
-            activators {
-                intent("Hello")
-            }
-
+        state("Reward") {
             action {
-                reactions.say("Hi ther!")
+                reactions.say("А сейчас смотри, что у меня есть.")
+                reactions.aimybox?.image("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg")
+                reactions.go("/End")
+            }
+        }
+
+        state("End") {
+            action {
+                reactions.aimybox?.endConversation()
             }
         }
 
