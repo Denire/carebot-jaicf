@@ -63,6 +63,7 @@ object MainScenario : Scenario() {
             state("Cakes") {
                 action {
 		            reactions.say("Вот скажи мне, что тебе больше нравится: Медовик или Наполеон?")
+
                 }
 
                 state("Napoleon") {
@@ -71,6 +72,7 @@ object MainScenario : Scenario() {
                     }
                     action {
                         reactions.say("Да, это вкусно!")
+                        reactions.go("/End")
                     }
                 }
 
@@ -80,9 +82,13 @@ object MainScenario : Scenario() {
                     }
                     action {
                         reactions.say("Да, он ничего. Но Наполеон мне все-таки как-то больше по душе.")
+                        reactions.go("/End")
                     }
                 }
-                fallback { reactions.say("Я такого, кажется, не пробовала.") }
+                fallback {
+                    reactions.say("Я такого, кажется, не пробовала.")
+                    reactions.go("/End")
+                }
             }
 
             state("Supermarket") {
