@@ -40,6 +40,8 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:$ktor")
 
     implementation("com.justai.jaicf:aimybox:$jaicf")
+    implementation("com.justai.jaicf:context:$jaicf")
+
 }
 
 tasks {

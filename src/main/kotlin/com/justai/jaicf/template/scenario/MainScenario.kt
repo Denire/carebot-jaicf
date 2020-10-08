@@ -1,9 +1,11 @@
 package com.justai.jaicf.template.scenario
 
+import com.justai.jaicf.activator.caila.caila
 import com.justai.jaicf.channel.aimybox.AimyboxEvent
 import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.channel.aimybox.api.UrlButton
 import com.justai.jaicf.model.scenario.Scenario
+import com.justai.jaicf.context.BotContext
 
 fun selectQuestion(): String {
     val questions = mutableListOf("Cakes", "Supermarket")
@@ -144,6 +146,7 @@ object MainScenario : Scenario() {
         }
 
         fallback {
+            println(context.result)
             reactions.say("К сожалению, я не могу ничего сказать по этому поводу. ")
             reactions.go("/Initiate")
         }
