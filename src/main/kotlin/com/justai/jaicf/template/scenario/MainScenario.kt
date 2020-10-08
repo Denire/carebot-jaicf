@@ -29,6 +29,7 @@ object MainScenario : Scenario() {
                 intent("Obsession")
             }
             action {
+                println(context.result)
                 reactions.sayRandom("Марк, давай поговорим об этом позже.", "Об этом я тебе еще расскажу.")
                 reactions.go("/Initiate")
             }
