@@ -29,7 +29,7 @@ object MainScenario : Scenario() {
                 intent("Obsession")
             }
             action {
-                println(context.result)
+                println(request.input)
                 reactions.sayRandom("Марк, давай поговорим об этом позже.", "Об этом я тебе еще расскажу.")
                 reactions.go("/Initiate")
             }
@@ -147,7 +147,7 @@ object MainScenario : Scenario() {
         }
 
         fallback {
-            println(context.result)
+            println(request.input)
             reactions.say("К сожалению, я не могу ничего сказать по этому поводу. ")
             reactions.go("/Initiate")
         }
