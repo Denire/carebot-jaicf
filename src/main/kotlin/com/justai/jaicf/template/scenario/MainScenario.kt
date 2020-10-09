@@ -6,6 +6,7 @@ import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.channel.aimybox.api.UrlButton
 import com.justai.jaicf.model.scenario.Scenario
 import com.justai.jaicf.context.BotContext
+import com.justai.jaicf.helpers.logging.logger
 
 fun selectQuestion(): String {
     val questions = mutableListOf("Cakes", "Supermarket")
@@ -18,6 +19,7 @@ object MainScenario : Scenario() {
         state("Start") {
             globalActivators {
                 event(AimyboxEvent.START)
+                regex("/start")
             }
             action {
                 reactions.say("Ну что, начнем! Спроси у меня что-нибудь.")
@@ -29,7 +31,6 @@ object MainScenario : Scenario() {
                 intent("Obsession")
             }
             action {
-                println(request.input)
                 reactions.sayRandom("Марк, давай поговорим об этом позже.", "Об этом я тебе еще расскажу.")
                 reactions.go("/Initiate")
             }
@@ -100,7 +101,6 @@ object MainScenario : Scenario() {
                 }
                 fallback {
                     counter += 1
-                    println(counter)
                     val lim = (1..3).shuffled().take(1)[0]
                     if (counter > lim) {
                         counter = 0
@@ -147,7 +147,7 @@ object MainScenario : Scenario() {
         }
 
         fallback {
-            println(request.input)
+            logger.info("Global fallback. Utterance: " + request.input)
             reactions.say("К сожалению, я не могу ничего сказать по этому поводу. ")
             reactions.go("/Initiate")
         }
