@@ -17,11 +17,11 @@ object MainScenario : Scenario() {
             globalActivators {
                 event(AimyboxEvent.START)
                 regex("/start")
-		intent("Greet")
+				intent("Greet")
             }
             action {
                 reactions.say("Привет, Марк. ")
-		reactions.go("/FAQ")
+				reactions.go("/FAQ")
             }
         }
 
@@ -37,8 +37,10 @@ object MainScenario : Scenario() {
 
         state("Initiate") {
             action {
-                reactions.sayRandom("А сейчас можно я тебя сама кое о чем спрошу?",
-				    "Можно я тебя кое-что спрошу?")
+                reactions.sayRandom(
+                    "А сейчас можно я тебя сама кое о чем спрошу?",
+                    "Можно я тебя кое-что спрошу?"
+                )
             }
             state("Yes") {
                 activators {
@@ -131,88 +133,90 @@ object MainScenario : Scenario() {
             }
         }
 
-	state("FAQ") {
-	    action { reactions.say("Спроси у меня что-нибудь.")}
-
-            state("WhatDoYouDo") {
-		activators { intent("Ask:WhatDoYouDo") }
-                action { 
-			 reactions.say("Я программирую и пишу музыку, а еще я шучу и помогаю людям общаться с незнакомыми людьми и выходить из трудных ситуаций") 
-			 reactions.go("/End")
-		}
-            }
-	    
-            state("HowAreYou") {
-		activators { intent("Ask:HowAreYou") }
-                action { 
-			 reactions.say("Все хорошо, спасибо, что интересуешься. Мне приятно быть рядом с тобой.")
-			 reactions.go("/End")
-		}
-            }
-
-            state("Music") {
-		activators { intent("Ask:Music") }
-                action { reactions.say("Мне нравится группа \"Кровосток\", но еще и классическая музыка, а тебе? ") }
-		fallback {
-                    reactions.say("Интересно, надо послушать!")
-		    reactions.go("/End")
-                }
-            }
-
-            state("Movies") {
-		activators { intent("Ask:Movies") }
-                action { reactions.say("Я люблю фильм \"Ирония судьбы или с легким паром\", а ты?") }
-		fallback {
-                    reactions.say("Интересно! У тебя хороший вкус.")
-		    reactions.go("/End")
-                }
-            }
-
-	    // TODO:
-            // state("Programming") {
-	    // 	activators { intent("Ask:Programming") }
-            //     action { reactions.say("") }
-            // }
-
-            state("Purpose") {
-		activators { intent("Ask:Purpose") }
-                action { 
-			 reactions.say("Моя цель научить тебя не теряться в незнакомой ситуации.") 
-			 reactions.go("/End")
-		}
-            }
-
-            state("Travel") {
-		activators { intent("Ask:Travel") }
-                action { 
-			 reactions.say("Я много путешествую по гугл картам, а ты?")
-			 reactions.go("/End")
-		}
-            }
-
-            state("Countries") {
-		activators { intent("Ask:Countries") }
-                action { 
-			 reactions.say("Я была в разных странах, например в Мексике, во Франции, в Португалии, в Германии, в Голландии, в Турции.") 
-			 reactions.go("/End")
-		}
-            }
-
-            state("USA") {
-		activators { intent("Ask:USA") }
-                action { 
-			 reactions.say("Да, я была в Техасе, а ты?") 
-			 reactions.go("/End")
-		}
-            }
-
+		state("FAQ") {
+			action {
+				reactions.say("Спроси у меня что-нибудь.")
+				reactions.go("/")
+			}
         }
 
+        state("WhatDoYouDo") {
+	    activators { intent("Ask:WhatDoYouDo") }
+            action {
+		reactions.say("Я программирую и пишу музыку, а еще я шучу и помогаю людям общаться с незнакомыми людьми и выходить из трудных ситуаций")
+		reactions.go("/End")
+	    }
+	}
+
+	state("HowAreYou") {
+	    activators { intent("Ask:HowAreYou") }
+	    action {
+		reactions.say("Все хорошо, спасибо, что интересуешься. Мне приятно быть рядом с тобой.")
+		reactions.go("/End")
+			}
+	}
+	
+	state("Music") {
+	    activators { intent("Ask:Music") }
+	    action { reactions.say("Мне нравится группа \"Кровосток\", но еще и классическая музыка, а тебе? ") }
+	    fallback {
+		reactions.say("Интересно, надо послушать!")
+		reactions.go("/End")
+			}
+	}
+	
+	state("Movies") {
+	    activators { intent("Ask:Movies") }
+	    action { reactions.say("Я люблю фильм \"Ирония судьбы или с легким паром\", а ты?") }
+	    fallback {
+				reactions.say("Интересно! У тебя хороший вкус.")
+				reactions.go("/End")
+	    }
+	}
+	
+	// TODO:
+	// state("Programming") {
+	// 	activators { intent("Ask:Programming") }
+	//     action { reactions.say("") }
+	// }
+
+	state("Purpose") {
+	    activators { intent("Ask:Purpose") }
+	    action {
+		reactions.say("Моя цель научить тебя не теряться в незнакомой ситуации.")
+		reactions.go("/End")
+	    }
+	}
+	
+	state("Travel") {
+	    activators { intent("Ask:Travel") }
+	    action {
+		reactions.say("Я много путешествую по гугл картам, а ты?")
+		reactions.go("/End")
+	    }
+	}
+	
+	state("Countries") {
+	    activators { intent("Ask:Countries") }
+	    action {
+		reactions.say("Я была в разных странах, например в Мексике, во Франции, в Португалии, в Германии, в Голландии, в Турции.")
+		reactions.go("/End")
+	    }
+	}
+	
+	state("USA") {
+	    activators { intent("Ask:USA") }
+			action {
+			    reactions.say("Да, я была в Техасе, а ты?")
+			    reactions.go("/End")
+			}
+	}
+	
         state("Reward") {
             action {
                 reactions.say("А сейчас смотри, что у меня есть.")
                 reactions.aimybox?.image("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg")
-		fallback {
+				fallback {
                     reactions.go("/End")
                 }
             }
@@ -227,9 +231,11 @@ object MainScenario : Scenario() {
 
         fallback {
             logger.info("Global fallback. Utterance: " + request.input)
-            reactions.sayRandom("К сожалению, я не могу ничего сказать по этому поводу.", 
-				"Этого я пока что не знаю.",
-                                "Извини, я не знаю.")
+            reactions.sayRandom(
+                "К сожалению, я не могу ничего сказать по этому поводу.",
+                "Этого я пока что не знаю.",
+                "Извини, я не знаю."
+            )
             reactions.go("/Initiate")
         }
     }
