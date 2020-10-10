@@ -20,7 +20,7 @@ object MainScenario : Scenario() {
 		intent("Greet")
             }
             action {
-                reactions.say("Привет, Марк. Ну что, начнем? Спроси у меня что-нибудь.")
+                reactions.say("Привет, Марк. ")
 		reactions.go("/FAQ")
             }
         }
@@ -132,6 +132,8 @@ object MainScenario : Scenario() {
         }
 
 	state("FAQ") {
+	    action { reactions.say("Спроси у меня что-нибудь.")}
+
             state("WhatDoYouDo") {
 		activators { intent("Ask:WhatDoYouDo") }
                 action { 
@@ -210,7 +212,9 @@ object MainScenario : Scenario() {
             action {
                 reactions.say("А сейчас смотри, что у меня есть.")
                 reactions.aimybox?.image("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg")
-                reactions.go("/End")
+		fallback {
+                    reactions.go("/End")
+                }
             }
         }
 
@@ -223,7 +227,9 @@ object MainScenario : Scenario() {
 
         fallback {
             logger.info("Global fallback. Utterance: " + request.input)
-            reactions.sayRandom("К сожалению, я не могу ничего сказать по этому поводу.", "")
+            reactions.sayRandom("К сожалению, я не могу ничего сказать по этому поводу.", 
+				"Этого я пока что не знаю.",
+                                "Извини, я не знаю.")
             reactions.go("/Initiate")
         }
     }
