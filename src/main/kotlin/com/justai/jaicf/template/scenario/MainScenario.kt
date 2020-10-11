@@ -20,6 +20,7 @@ object MainScenario : Scenario() {
 				intent("Greet")
             }
             action {
+                logger.info("/Start")
                 reactions.say("Привет, Марк. ")
 				reactions.go("/")
             }
