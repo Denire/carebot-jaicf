@@ -2,6 +2,7 @@ package com.justai.jaicf.template.scenario
 
 import com.justai.jaicf.channel.aimybox.AimyboxEvent
 import com.justai.jaicf.channel.aimybox.aimybox
+import com.justai.jaicf.channel.telegram.telegram
 import com.justai.jaicf.helpers.logging.logger
 import com.justai.jaicf.model.scenario.Scenario
 
@@ -232,7 +233,7 @@ object MainScenario : Scenario() {
                         }
                         fallback {
                             reactions.say("А я бы сказала, что если ты не соблюдаешь дистанцию, мне такая дружба не нужна. ")
-                            reactions.go("Reward")
+                            reactions.go("/Reward")
                         }
                     }
 
@@ -276,6 +277,7 @@ object MainScenario : Scenario() {
             action {
                 reactions.say("А сейчас смотри, что у меня есть.")
                 reactions.aimybox?.image("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg")
+                reactions.telegram?.image("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg", "Texas")
 				fallback {
                     reactions.go("/End")
                 }
