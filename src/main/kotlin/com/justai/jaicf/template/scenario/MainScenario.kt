@@ -5,9 +5,8 @@ import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.helpers.logging.logger
 import com.justai.jaicf.model.scenario.Scenario
 
-fun selectQuestion(): String {
-    val questions = mutableListOf("Cakes", "Supermarket")
-    return questions.shuffled().take(1)[0]
+fun randSelect(xs:MutableList<String>): String {
+    return xs.shuffled().take(1)[0]
 }
 
 object MainScenario : Scenario() {
@@ -17,10 +16,11 @@ object MainScenario : Scenario() {
             globalActivators {
                 event(AimyboxEvent.START)
                 regex("/start")
-//				intent("Greet")
+				intent("Greet")
             }
             action {
                 logger.info("/Start")
+                reactions.say("Привет, Марк. Спроси у меня что-нибудь.")
             }
 
             state("WhatDoYouDo") {
@@ -135,8 +135,11 @@ object MainScenario : Scenario() {
         }
 
         state("Ask") {
+            activators {
+                intent("Request:AskMe")
+            }
             action {
-                val question = selectQuestion()
+                val question = randSelect(mutableListOf("Cakes", "Supermarket", "BadAdv"))
                 reactions.go(question)
             }
 
@@ -182,12 +185,12 @@ object MainScenario : Scenario() {
                         counter = 0
                         reactions.go("../Cashier")
                     } else {
-                        reactions.sayRandom("угу", "что дальше?", "а дальше что?")
+                        reactions.sayRandom("угу", "что дальше?", "а дальше что?", "Главное - успокоиться!")
                     }
                 }
 
                 state("Cashier") {
-                    action { reactions.say("Хорошо. а на кассе ты что говоришь?") }
+                    action { reactions.say("Хорошо. А на кассе ты что говоришь?") }
                     fallback { reactions.go("../1") }
                     state("1") {
                         action { reactions.say("Марк, ну допустим вот я продавец, да? и если у тебя не хватает денег и ты взял молоко дороже, чем у тебя есть денег, и я говорю \"у вас не хватает 15 рублей\". Что тогда?") }
@@ -204,6 +207,64 @@ object MainScenario : Scenario() {
                         }
                     }
                 }
+            }
+
+            state("Friend") {
+                action {
+                    reactions.say("Марк, представь, что ты пошел гулять с другом, который все время хочет с тобой обниматься, а тебе это не всегда нравиться, что ты ему скажешь? ")
+                }
+                fallback { reactions.go("../1") }
+                state("1") {
+                    action {
+                        reactions.say("А он говорит: Марк, я хочу обниматься, можно я тебя обниму?")
+                    }
+                    state("true") {
+                        activators { intent("Answer:Yes") }
+                        action {
+                            reactions.say("Хорошо, но можно еще сказать, что мне не нужна твоя дружба если ты не соблюдаешь дистанцию. ")
+                            reactions.go("/Reward")
+                        }
+                    }
+                    state("false") {
+                        activators { intent("Answer:No") }
+                        action {
+                            reactions.say("А если он скажет: а тогда я обижусь!")
+                        }
+                        fallback {
+                            reactions.say("А я бы сказала, что если ты не соблюдаешь дистанцию, мне такая дружба не нужна. ")
+                            reactions.go("Reward")
+                        }
+                    }
+
+                }
+            }
+
+
+            state("BadAdv") {
+                action {
+                    reactions.sayRandom("Давай придумаем вредный совет!", "Давай придумаем совет, только очень вредный!")
+                    val question = randSelect(mutableListOf("Metro", "Gopnik"))
+                    reactions.go(question)
+                }
+                state("Gopnik") {
+                    action {
+                        reactions.say("Если к тебе на улице подойдет неприятный человек и начнет обзывать. \"А чего ты так ходишь? Ты что больной или ты наркоман?\" Дай вредный совет! Что не нужно делать?")
+                    }
+                    fallback {
+                        reactions.say("Но только нельзя забывать, что это вредный совет! Я придумала вот такой: позвать его в гости!")
+                        reactions.go("/Reward")
+                    }
+                }
+                state("Metro") {
+                    action {
+                        reactions.say("Тебе куда-то нужно ехать, а на карте метрополитена закончились деньги. Дай мне вредный совет, что не нужно делать в такой ситуации. ")
+                        fallback {
+                            reactions.say("Но не забывай, что это вредный совет! А я придумала вот такой совет: перепрыгнуть через турникет.")
+                            reactions.go("/Reward")
+                        }
+                    }
+                }
+
             }
         }
 
@@ -235,7 +296,7 @@ object MainScenario : Scenario() {
                 "Этого я пока что не знаю.",
                 "Извини, я не знаю."
             )
-            reactions.go("/Start")
+            reactions.go("/Initiate")
         }
     }
 }

@@ -3,6 +3,7 @@ package com.justai.jaicf.template.connections
 import com.justai.jaicf.channel.jaicp.JaicpPollingConnector
 import com.justai.jaicf.channel.jaicp.channels.ChatApiChannel
 import com.justai.jaicf.channel.jaicp.channels.ChatWidgetChannel
+import com.justai.jaicf.channel.telegram.TelegramChannel
 //import com.justai.jaicf.channel
 
 import com.justai.jaicf.template.accessToken
@@ -14,8 +15,8 @@ fun main() {
         accessToken,
         channels = listOf(
             ChatApiChannel,
-            ChatWidgetChannel
-//            TelegramChannel
+            ChatWidgetChannel,
+            TelegramChannel
 //            TelephonyChannel
         )
     ).runBlocking()
