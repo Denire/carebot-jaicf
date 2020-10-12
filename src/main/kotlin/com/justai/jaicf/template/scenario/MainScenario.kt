@@ -288,6 +288,7 @@ object MainScenario : Scenario() {
             globalActivators { intent("Request:End") }
             action {
                 reactions.aimybox?.endConversation()
+                reactions.telegram?.say("--- конец диалога ---")
             }
         }
 
