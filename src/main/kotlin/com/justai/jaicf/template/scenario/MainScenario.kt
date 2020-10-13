@@ -95,8 +95,6 @@ object MainScenario : Scenario() {
                     reactions.go("/End")
                 }
             }
-
-
         }
 
         state("Obsession") {
@@ -120,8 +118,10 @@ object MainScenario : Scenario() {
             state("Yes") {
                 activators {
                     intent("Answer:Yes")
+                    intent("Answer:Ask")
                 }
                 action {
+                    reactions.sayRandom("Отлично", "Супер")
                     reactions.go("/Ask")
                 }
             }
@@ -131,7 +131,11 @@ object MainScenario : Scenario() {
                 }
                 action {
                     reactions.say("Ну ладно.")
+                    reactions.go("/End")
                 }
+            }
+            fallback {
+                reactions.go("Ask")
             }
         }
 
@@ -278,9 +282,9 @@ object MainScenario : Scenario() {
                 reactions.say("А сейчас смотри, что у меня есть.")
                 reactions.aimybox?.image("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg")
                 reactions.telegram?.image("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg", "Texas")
-				fallback {
-                    reactions.go("/End")
-                }
+            }
+            fallback {
+                reactions.go("/End")
             }
         }
 
