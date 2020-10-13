@@ -298,6 +298,8 @@ object MainScenario : Scenario() {
 
         fallback {
             logger.info("Global fallback. Utterance: " + request.input)
+            logger.info(this.context.session.toString())
+            logger.info(this.context.dialogContext.toString())
             reactions.sayRandom(
                 "К сожалению, я не могу ничего сказать по этому поводу.",
                 "Этого я пока что не знаю.",
