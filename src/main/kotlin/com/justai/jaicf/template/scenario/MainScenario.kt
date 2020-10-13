@@ -135,7 +135,7 @@ object MainScenario : Scenario() {
                 }
             }
             fallback {
-                reactions.go("Ask")
+                reactions.go("/Ask")
             }
         }
 
