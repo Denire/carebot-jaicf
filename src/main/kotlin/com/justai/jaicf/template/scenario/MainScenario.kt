@@ -6,7 +6,7 @@ import com.justai.jaicf.channel.telegram.telegram
 import com.justai.jaicf.helpers.logging.logger
 import com.justai.jaicf.model.scenario.Scenario
 
-fun randSelect(xs:MutableList<String>): String {
+fun randSelect(xs: MutableList<String>): String {
     return xs.shuffled().take(1)[0]
 }
 
@@ -106,7 +106,6 @@ object MainScenario : Scenario() {
                 reactions.go("/Initiate")
             }
         }
-
 
         state("Initiate") {
             action {
@@ -240,10 +239,8 @@ object MainScenario : Scenario() {
                             reactions.go("/Reward")
                         }
                     }
-
                 }
             }
-
 
             state("BadAdv") {
                 action {
@@ -269,14 +266,9 @@ object MainScenario : Scenario() {
                         reactions.go("/Reward")
                     }
                 }
-
             }
         }
 
-
-
-
-	
         state("Reward") {
             action {
                 reactions.say("А сейчас смотри, что у меня есть.")
@@ -288,8 +280,15 @@ object MainScenario : Scenario() {
             }
         }
 
-        state("End") {
+        state("Stop") {
             globalActivators { intent("Request:End") }
+			action {
+				reactions.sayRandom("Окей.", "Хорошо.")
+				reactions.go("/End")
+			}
+        }
+
+        state("End") {
             action {
                 reactions.aimybox?.endConversation()
                 reactions.telegram?.say("--- конец диалога ---")
@@ -299,10 +298,12 @@ object MainScenario : Scenario() {
         fallback {
             logger.info("Global fallback. Utterance: " + request.input)
             logger.info(this.context.session.toString())
-            logger.info("currentState: " + this.context.dialogContext.currentState +
-                    ", currentContext" + this.context.dialogContext.currentContext +
-                    ", backStateStack" + this.context.dialogContext.backStateStack.toString() +
-                    ", " + this.context.dialogContext.transitions.toString())
+            logger.info(
+                "currentState: " + this.context.dialogContext.currentState +
+					", currentContext" + this.context.dialogContext.currentContext +
+					", backStateStack" + this.context.dialogContext.backStateStack.toString() +
+					", " + this.context.dialogContext.transitions.toString()
+            )
             reactions.sayRandom(
                 "К сожалению, я не могу ничего сказать по этому поводу.",
                 "Этого я пока что не знаю.",
