@@ -18,7 +18,7 @@ object MainScenario : Scenario() {
 
     init {
         handle<BotRequestHook> { hook ->
-            println("BotRequestHook: "+ hook.context.session.toString())
+            println("BotRequestHook: "+ hook.context.dialogContext.currentContext )
             if (hook.context.dialogContext.currentContext == "/") {
                 println("Initial request, going to /Start")
 //                hook.reactions.go("/Start")
@@ -27,14 +27,16 @@ object MainScenario : Scenario() {
         }
 
         handle<BeforeProcessHook> { hook ->
-            println("BeforeProcessHook: " + hook.context.session.toString())
+            println("BeforeProcessHook: " + hook.context.dialogContext.currentContext )
         }
 
         handle<AfterProcessHook> { hook ->
-            println("AfterProcessHook: " + hook.context.session.toString())
+            println("AfterProcessHook: " + hook.context.dialogContext.currentContext )
         }
 
 
+        state("/") {
+        }
 
         state("Start") {
             globalActivators {
