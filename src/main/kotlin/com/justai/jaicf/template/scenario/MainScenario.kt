@@ -4,6 +4,7 @@ import com.justai.jaicf.channel.aimybox.AimyboxEvent
 import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.channel.telegram.telegram
 import com.justai.jaicf.helpers.logging.logger
+import com.justai.jaicf.hook.BeforeProcessHook
 import com.justai.jaicf.model.scenario.Scenario
 
 fun randSelect(xs: MutableList<String>): String {
@@ -13,6 +14,14 @@ fun randSelect(xs: MutableList<String>): String {
 object MainScenario : Scenario() {
 
     init {
+        handle<BeforeProcessHook> { hook ->
+            if (hook.context.session.isEmpty()) {
+                println("Initial request, going to /Start")
+                hook.reactions.go("/Start")
+            }
+        }
+        
+	
         state("Start") {
             globalActivators {
                 event(AimyboxEvent.START)
@@ -157,7 +166,7 @@ object MainScenario : Scenario() {
                     }
                     action {
                         reactions.say("Да, это вкусно!")
-                        reactions.go("/End")
+                        reactions.go("/Reward")
                     }
                 }
                 state("Medovik") {
@@ -166,12 +175,12 @@ object MainScenario : Scenario() {
                     }
                     action {
                         reactions.say("Да, он ничего. Но Наполеон мне все-таки как-то больше по душе.")
-                        reactions.go("/End")
+                        reactions.go("/Reward")
                     }
                 }
                 fallback {
                     reactions.say("Я такого, кажется, не пробовала.")
-                    reactions.go("/End")
+                    reactions.go("/Reward")
                 }
             }
 
