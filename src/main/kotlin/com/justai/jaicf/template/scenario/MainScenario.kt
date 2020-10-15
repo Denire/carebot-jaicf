@@ -21,7 +21,7 @@ object MainScenario : Scenario() {
             println("BotRequestHook: "+ hook.context.session.toString())
             if (hook.context.session.isEmpty()) {
                 println("Initial request, going to /Start")
-                hook.reactions.go("/Start")
+//                hook.reactions.go("/Start")
                 hook.context.dialogContext.currentContext = "/Start"
             }
         }
