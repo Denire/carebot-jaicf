@@ -4,6 +4,7 @@ import com.justai.jaicf.channel.aimybox.AimyboxEvent
 import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.channel.telegram.telegram
 import com.justai.jaicf.helpers.logging.logger
+import com.justai.jaicf.hook.AfterProcessHook
 import com.justai.jaicf.hook.BeforeProcessHook
 import com.justai.jaicf.model.scenario.Scenario
 
@@ -14,7 +15,7 @@ fun randSelect(xs: MutableList<String>): String {
 object MainScenario : Scenario() {
 
     init {
-        handle<BeforeProcessHook> { hook ->
+        handle<AfterProcessHook> { hook ->
             if (hook.context.session.isEmpty()) {
                 println("Initial request, going to /Start")
                 println(hook.context.session.toString())
