@@ -315,6 +315,7 @@ object MainScenario : Scenario() {
         state("End") {
             action {
                 reactions.aimybox?.endConversation()
+                reactions.go("/")
                 reactions.telegram?.say("--- конец диалога ---")
             }
         }
