@@ -17,6 +17,7 @@ object MainScenario : Scenario() {
         handle<BeforeProcessHook> { hook ->
             if (hook.context.session.isEmpty()) {
                 println("Initial request, going to /Start")
+                println(hook.context.session.toString())
                 hook.reactions.go("/Start")
             }
         }
@@ -29,6 +30,7 @@ object MainScenario : Scenario() {
 				intent("Greet")
             }
             action {
+
                 logger.info("/Start")
                 reactions.say("Привет, Марк. Спроси у меня что-нибудь.")
             }
