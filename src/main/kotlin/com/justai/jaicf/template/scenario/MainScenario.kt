@@ -6,6 +6,7 @@ import com.justai.jaicf.channel.telegram.telegram
 import com.justai.jaicf.helpers.logging.logger
 import com.justai.jaicf.hook.AfterProcessHook
 import com.justai.jaicf.hook.BeforeProcessHook
+import com.justai.jaicf.hook.BotRequestHook
 import com.justai.jaicf.model.scenario.Scenario
 
 fun randSelect(xs: MutableList<String>): String {
@@ -15,15 +16,24 @@ fun randSelect(xs: MutableList<String>): String {
 object MainScenario : Scenario() {
 
     init {
-        handle<AfterProcessHook> { hook ->
+        handle<BotRequestHook> { hook ->
+            println("BotRequestHook: "+ hook.context.session.toString())
             if (hook.context.session.isEmpty()) {
                 println("Initial request, going to /Start")
-                println(hook.context.session.toString())
                 hook.reactions.go("/Start")
             }
         }
-        
-	
+
+        handle<BeforeProcessHook> { hook ->
+            println("BeforeProcessHook: " + hook.context.session.toString())
+        }
+
+        handle<AfterProcessHook> { hook ->
+            println("AfterProcessHook: " + hook.context.session.toString())
+        }
+
+
+
         state("Start") {
             globalActivators {
                 event(AimyboxEvent.START)
