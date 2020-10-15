@@ -2,6 +2,7 @@ package com.justai.jaicf.template.scenario
 
 import com.justai.jaicf.channel.aimybox.AimyboxEvent
 import com.justai.jaicf.channel.aimybox.aimybox
+import com.justai.jaicf.channel.aimybox.api.aimybox
 import com.justai.jaicf.channel.telegram.telegram
 import com.justai.jaicf.helpers.logging.logger
 import com.justai.jaicf.hook.AfterProcessHook
@@ -21,6 +22,7 @@ object MainScenario : Scenario() {
             if (hook.context.session.isEmpty()) {
                 println("Initial request, going to /Start")
                 hook.reactions.go("/Start")
+                hook.context.dialogContext.currentContext = "/Start"
             }
         }
 
