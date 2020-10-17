@@ -9,6 +9,7 @@ import com.justai.jaicf.hook.AfterProcessHook
 import com.justai.jaicf.hook.BeforeProcessHook
 import com.justai.jaicf.hook.BotRequestHook
 import com.justai.jaicf.model.scenario.Scenario
+import java.util.regex.Pattern
 
 fun randSelect(xs: MutableList<String>): String {
     return xs.shuffled().take(1)[0]
@@ -331,7 +332,10 @@ object MainScenario : Scenario() {
             globalActivators {
                 regex("/quiz")
             }
-            action { reactions.say("А теперь что-то действительно интересное! Викторина.") }
+            action {
+                reactions.say("А теперь что-то действительно интересное! Викторина.")
+                reactions.go("Guess")
+            }
             val (img, place, re) = images.shuffled().take(1)[0]
             state("Guess") {
                 var counter = 0
@@ -341,7 +345,7 @@ object MainScenario : Scenario() {
                     reactions.say("Как ты думаешь, где это?")
                 }
                 state("Correct") {
-                    activators { regex(re) }
+                    activators { regex(Pattern.compile(re, Pattern.CASE_INSENSITIVE).toRegex()) }
                     action {
                         reactions.say("Правильно! Это $place.")
                         reactions.go("/End")
