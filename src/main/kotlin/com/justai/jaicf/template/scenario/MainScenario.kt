@@ -121,6 +121,11 @@ object MainScenario : Scenario() {
                     reactions.go("/End")
                 }
             }
+
+            state("Quiz") {
+                activators { intent("Request:Quiz") }
+                action { reactions.go("/Reward") }
+            }
         }
 
         state("Obsession") {
@@ -295,7 +300,7 @@ object MainScenario : Scenario() {
             }
         }
 
-        state("Reward") {
+        state("Reward2") {
             action {
                 reactions.say("А сейчас смотри, что у меня есть.")
                 reactions.aimybox?.image("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg")
@@ -306,7 +311,7 @@ object MainScenario : Scenario() {
             }
         }
 
-        state("Reward2") {
+        state("Reward") {
             val images:MutableList<Triple<String,String,String>> = mutableListOf(
                     Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg",
                             "Остин, штат Техас", "(остин|техас)"),
@@ -323,6 +328,9 @@ object MainScenario : Scenario() {
                     Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Biscayne_Boulevard_night_20101202.jpg/1920px-Biscayne_Boulevard_night_20101202.jpg",
                             "Флорида", "(флорида)")
             )
+            globalActivators {
+                regex("/quiz")
+            }
             action { reactions.say("А теперь что-то действительно интересное! Викторина.") }
             val (img, place, re) = images.shuffled().take(1)[0]
             state("Guess") {
