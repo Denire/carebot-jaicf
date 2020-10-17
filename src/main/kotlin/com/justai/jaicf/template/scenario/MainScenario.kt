@@ -329,14 +329,15 @@ object MainScenario : Scenario() {
                     Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Biscayne_Boulevard_night_20101202.jpg/1920px-Biscayne_Boulevard_night_20101202.jpg",
                             "Флорида", "(флорида)")
             )
+            val (img, place, re) = images.shuffled().take(1)[0]
             globalActivators {
                 regex("/quiz")
             }
             action {
+                logger.info("Selected $place")
                 reactions.say("А теперь что-то действительно интересное! Викторина.")
                 reactions.go("Guess")
             }
-            val (img, place, re) = images.shuffled().take(1)[0]
             state("Guess") {
                 var counter = 0
                 action {
@@ -345,7 +346,10 @@ object MainScenario : Scenario() {
                     reactions.say("Как ты думаешь, где это?")
                 }
                 state("Correct") {
-                    activators { regex(Pattern.compile(re, Pattern.CASE_INSENSITIVE).toRegex()) }
+                    activators {
+                        regex(Pattern.compile(re, Pattern.CASE_INSENSITIVE).toRegex())
+                        intent("Answer:NewMexico")
+                    }
                     action {
                         reactions.say("Правильно! Это $place.")
                         reactions.go("/End")
