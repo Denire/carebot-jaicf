@@ -306,6 +306,53 @@ object MainScenario : Scenario() {
             }
         }
 
+        state("Reward2") {
+            val images:MutableList<Triple<String,String,String>> = mutableListOf(
+                    Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg",
+                            "Остин, штат Техас", "(остин|техас)"),
+                    Triple("https://upload.wikimedia.org/wikipedia/commons/2/2b/Sangre_de_Christo_Mountains-Winter_sunset.jpg",
+                            "Нью-Мехико", "(мехико)"),
+                    Triple("https://upload.wikimedia.org/wikipedia/commons/f/f9/Hotel_Santa_Fe_New_Mexico.jpg",
+                            "Нью-Мехико", "(мехико)"),
+                    Triple("https://upload.wikimedia.org/wikipedia/commons/4/44/Albuquerque_-_aerial_-_I-40_east_from_Juan_Tabo_Blvd_NE.jpg",
+                    "Нью-Мехико", "(мехико)"),
+                    Triple("https://upload.wikimedia.org/wikipedia/commons/3/36/Islamorada_Florida.jpg",
+                            "Флорида", "(флорида)"),
+                    Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/2007_Miami_sunset_3.jpg/1280px-2007_Miami_sunset_3.jpg",
+                            "Флорида", "(флорида)"),
+                    Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Biscayne_Boulevard_night_20101202.jpg/1920px-Biscayne_Boulevard_night_20101202.jpg",
+                            "Флорида", "(флорида)")
+            )
+            action { reactions.say("А теперь что-то действительно интересное! Викторина.") }
+            val (img, place, re) = images.shuffled().take(1)[0]
+            state("Guess") {
+                var counter = 0
+                action {
+                    reactions.aimybox?.image(img)
+                    reactions.telegram?.image(img)
+                    reactions.say("Как ты думаешь, где это?")
+                }
+                state("Correct") {
+                    activators { regex(re) }
+                    action {
+                        reactions.say("Правильно! Это $place.")
+                        reactions.go("/End")
+                    }
+                fallback {
+                    counter += 1
+                    if (counter > 3) {
+                        counter = 0
+                        reactions.say("А на самом деле это $place.")
+                        reactions.go("/End")
+                    } else {
+                        reactions.say("Мне кажется, что это не так! Попробуй еще раз.")
+                    }
+                }
+                }
+            }
+
+        }
+
         state("Stop") {
             globalActivators { intent("Request:End") }
 			action {
