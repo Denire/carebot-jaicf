@@ -73,6 +73,14 @@ object MainScenario : Scenario() {
                 }
             }
 
+            state("WhoAreYou") {
+                activators { intent("Ask:WhoAreYou") }
+                action {
+                    reactions.say("Я - Диана, виртуальная собеседница.")
+                    reactions.go("/End")
+                }
+            }
+
             state("HowAreYou") {
                 activators { intent("Ask:HowAreYou") }
                 action {
@@ -189,7 +197,7 @@ object MainScenario : Scenario() {
                 intent("Request:AskMe")
             }
             action {
-                val question = randSelect(mutableListOf("Cakes", "Supermarket", "BadAdv"))
+                val question = randSelect(mutableListOf("Cakes", "Supermarket", "BadAdv", "Friend"))
                 reactions.go(question)
             }
 
@@ -331,7 +339,7 @@ object MainScenario : Scenario() {
                     Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg",
                             "Остин, штат Техас", ".*(остин|техас).*"),
                     Triple("https://upload.wikimedia.org/wikipedia/commons/2/2b/Sangre_de_Christo_Mountains-Winter_sunset.jpg",
-                            "горы Сангре-де-Кристо, штат Нью-Мехико", ".*(мехик|мексик).*"),
+                            "горный массив Сангре-де-Кристо, штат Нью-Мехико", ".*(мехик|мексик).*"),
                     Triple("https://upload.wikimedia.org/wikipedia/commons/f/f9/Hotel_Santa_Fe_New_Mexico.jpg",
                             "Санта-Фе, Нью-Мехико", ".*(фе|фэ|мехик|мексик).*"),
                     Triple("https://upload.wikimedia.org/wikipedia/commons/b/ba/Albuquerque_aerial.jpg",
@@ -376,7 +384,9 @@ object MainScenario : Scenario() {
                         reactions.say("А на самом деле это $place.")
                         reactions.go("/End")
                     } else {
-                        reactions.say("Мне кажется, что это не так! Попробуй еще раз.")
+                        reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
+					    "Ну нет, еще попытка!", 
+					    "Мне кажется, это где-то в другом месте. Еще попытка?")
                     }
                 }
             }
