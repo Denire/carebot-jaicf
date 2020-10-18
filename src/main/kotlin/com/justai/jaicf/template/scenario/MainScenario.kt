@@ -127,15 +127,15 @@ object MainScenario : Scenario() {
                 activators { intent("Request:Quiz") }
                 action { reactions.go("/Reward") }
             }
-        }
 
-        state("Obsession") {
-            activators {
-                intent("Obsession")
-            }
-            action {
-                reactions.sayRandom("Марк, давай поговорим об этом позже.", "Об этом я тебе еще расскажу.")
-                reactions.go("/Initiate")
+            state("Obsession") {
+		activators {
+                    intent("Obsession")
+		}
+		action {
+                    reactions.sayRandom("Марк, давай поговорим об этом позже.", "Об этом я тебе еще расскажу.")
+                    reactions.go("/Initiate")
+		}
             }
         }
 
