@@ -334,7 +334,7 @@ object MainScenario : Scenario() {
                             "Нью-Мехико", ".*(мехико).*"),
                     Triple("https://upload.wikimedia.org/wikipedia/commons/f/f9/Hotel_Santa_Fe_New_Mexico.jpg",
                             "Нью-Мехико", ".*(мехико).*"),
-                    Triple("https://upload.wikimedia.org/wikipedia/commons/4/44/Albuquerque_-_aerial_-_I-40_east_from_Juan_Tabo_Blvd_NE.jpg",
+                    Triple("https://upload.wikimedia.org/wikipedia/commons/b/ba/Albuquerque_aerial.jpg",
 			   "Нью-Мехико", ".*(мехико).*"),
                     Triple("https://upload.wikimedia.org/wikipedia/commons/3/36/Islamorada_Florida.jpg",
                             "Флорида", ".*(флорида).*"),
