@@ -379,7 +379,6 @@ object MainScenario : Scenario() {
 
         state("End") {
             action {
-                reactions.aimybox?.image("")
                 reactions.aimybox?.endConversation()
                 reactions.go("/")
                 reactions.telegram?.say("--- конец диалога ---")
@@ -395,7 +394,6 @@ object MainScenario : Scenario() {
 					", backStateStack" + this.context.dialogContext.backStateStack.toString() +
 					", " + this.context.dialogContext.transitions.toString()
             )
-            reactions.aimybox?.image("")
             reactions.sayRandom(
                 "К сожалению, я не могу ничего сказать по этому поводу.",
                 "Этого я пока что не знаю.",
