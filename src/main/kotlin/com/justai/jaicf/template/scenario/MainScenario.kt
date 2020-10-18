@@ -46,9 +46,23 @@ object MainScenario : Scenario() {
 		// intent("Greet")
             }
             action {
-
                 logger.info("/Start")
-                reactions.say("Привет, Марк. Спроси у меня что-нибудь.")
+            }
+
+            state("Greet") {
+                activators { intent("Greet") }
+                action { reactions.say("Привет, Марк. Как дела?") }
+                fallback {
+                    // reactions.sayRandom("")
+                    reactions.go("/End")
+                }
+		state("HowAreYou") {
+                    activators { intent("Ask:HowAreYou") }
+                    action {
+			reactions.say("Все хорошо, спасибо, что интересуешься. Мне приятно быть рядом с тобой.")
+			reactions.go("/End")
+                    }
+		}
             }
 
             state("WhatDoYouDo") {
@@ -357,7 +371,7 @@ object MainScenario : Scenario() {
                 }
                 fallback {
                     counter += 1
-                    if (counter > 3) {
+                    if (counter > 2) {
                         counter = 0
                         reactions.say("А на самом деле это $place.")
                         reactions.go("/End")
