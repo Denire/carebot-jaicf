@@ -348,12 +348,13 @@ object MainScenario : Scenario() {
                 state("Correct") {
                     activators {
                         regex(Pattern.compile(re, Pattern.CASE_INSENSITIVE).toRegex())
-                        intent("Answer:NewMexico")
+//                        intent("Answer:NewMexico")
                     }
                     action {
                         reactions.say("Правильно! Это $place.")
                         reactions.go("/End")
                     }
+                }
                 fallback {
                     counter += 1
                     if (counter > 3) {
@@ -363,7 +364,6 @@ object MainScenario : Scenario() {
                     } else {
                         reactions.say("Мне кажется, что это не так! Попробуй еще раз.")
                     }
-                }
                 }
             }
 
