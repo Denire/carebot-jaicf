@@ -43,7 +43,7 @@ object MainScenario : Scenario() {
             globalActivators {
                 event(AimyboxEvent.START)
                 regex("/start")
-				intent("Greet")
+		// intent("Greet")
             }
             action {
 
