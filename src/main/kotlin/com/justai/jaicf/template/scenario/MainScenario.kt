@@ -269,7 +269,7 @@ object MainScenario : Scenario() {
 
             state("Friend") {
                 action {
-                    reactions.say("Марк, представь, что ты пошел гулять с другом, который все время хочет с тобой обниматься, а тебе это не всегда нравиться, что ты ему скажешь? ")
+                    reactions.say("Марк, представь, что ты пошел гулять с другом, который все время хочет с тобой обниматься, а тебе это не всегда нравиться. Что ты ему скажешь? ")
                 }
                 fallback { reactions.go("../1") }
                 state("1") {
@@ -277,7 +277,8 @@ object MainScenario : Scenario() {
                         reactions.say("А он говорит: Марк, я хочу обниматься, можно я тебя обниму?")
                     }
                     state("true") {
-                        activators { intent("Answer:Yes") }
+                        activators { intent("Answer:Yes")
+				     intent("Answer:Ask") }
                         action {
                             reactions.say("Хорошо, но можно еще сказать, что мне не нужна твоя дружба если ты не соблюдаешь дистанцию. ")
                             reactions.go("/Reward")
@@ -292,6 +293,10 @@ object MainScenario : Scenario() {
                             reactions.say("А я бы сказала, что если ты не соблюдаешь дистанцию, мне такая дружба не нужна. ")
                             reactions.go("/Reward")
                         }
+                    }
+                    fallback {
+                        reactions.say("А я бы сказала, что если ты не соблюдаешь дистанцию, мне такая дружба не нужна. ")
+                        reactions.go("/Reward")
                     }
                 }
             }
@@ -385,7 +390,7 @@ object MainScenario : Scenario() {
                         reactions.go("/End")
                     } else {
                         reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
-					    "Ну нет, еще попытка!", 
+					    "Ну нет... Ещё попытка!", 
 					    "Мне кажется, это где-то в другом месте. Еще попытка?")
                     }
                 }
