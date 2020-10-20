@@ -88,7 +88,7 @@ object MainScenario : Scenario() {
             state("WhatDoYouDo") {
                 activators { intent("Ask:WhatDoYouDo") }
                 action {
-                    reactions.say("Я программирую и пишу музыку, а еще я шучу и помогаю людям общаться с незнакомыми людьми и выходить из трудных ситуаций")
+                    reactions.say("Я программирую и пишу музыку, а еще я шучу и помогаю людям общаться с незнакомыми людьми и выходить из трудных ситуаций.")
                     reactions.go("/End")
                 }
             }
@@ -217,8 +217,19 @@ object MainScenario : Scenario() {
                 intent("Request:AskMe")
             }
             action {
-                val question = randSelect(mutableListOf("Cakes", "Supermarket", "BadAdv", "Friend"))
+                val question = randSelect(mutableListOf("Cakes", "Supermarket", "BadAdv", "Friend", "Art"))
                 reactions.go(question)
+            }
+
+            state("Art") {
+                action { reactions.say("Марк, а ты любишь искусство?") }
+                fallback { reactions.go("../1") }
+                state("../1") {
+                    action {
+                        reactions.say("У тебя хороший вкус. А мне нравится цифровое искусство или если сказать шире, то медиаискусство. Новое медиальное искусство интерактивно. Часто произведение окончательно создается, именно когда внутрь него, например внутрь инсталляции, попадает зритель, реакция которого очень важна.")
+                        reactions.go("/End")
+                    }
+                }
             }
 
             state("Cakes") {
