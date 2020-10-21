@@ -389,8 +389,6 @@ object MainScenario : Scenario() {
                 }
                 state("Correct") {
                     activators {
-                        val quiz = QuizController()
-                        quiz.current = quiz.quizSelect()
                         regex(Pattern.compile(re, Pattern.CASE_INSENSITIVE).toRegex())
 //                        intent("Answer:NewMexico")
                     }
