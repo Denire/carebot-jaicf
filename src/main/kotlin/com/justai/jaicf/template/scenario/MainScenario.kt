@@ -4,11 +4,13 @@ import com.justai.jaicf.channel.aimybox.AimyboxEvent
 import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.channel.aimybox.api.aimybox
 import com.justai.jaicf.channel.telegram.telegram
+import com.justai.jaicf.context.ActionContext
 import com.justai.jaicf.helpers.logging.logger
 import com.justai.jaicf.hook.AfterProcessHook
 import com.justai.jaicf.hook.BeforeProcessHook
 import com.justai.jaicf.hook.BotRequestHook
 import com.justai.jaicf.model.scenario.Scenario
+import com.justai.jaicf.template.controllers.QuizController
 import java.util.regex.Pattern
 
 fun randSelect(xs:MutableList<String>): String {
@@ -363,7 +365,7 @@ object MainScenario : Scenario() {
             }
             state("Guess") {
                 var counter = 0
-                var (img,place,re) =
+                val (img,place,re) =
                         randSelect(mutableListOf(
                                 Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg",
                                         "Остин, штат Техас", ".*(остин|техас).*"),
@@ -380,16 +382,21 @@ object MainScenario : Scenario() {
                                 Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Biscayne_Boulevard_night_20101202.jpg/1920px-Biscayne_Boulevard_night_20101202.jpg",
                                         "Флорида", ".*(флорида).*")))
                 action {
+                    logger.info("Selected $place")
                     reactions.aimybox?.image(img)
                     reactions.telegram?.image(img)
                     reactions.say("Как ты думаешь, где это?")
                 }
                 state("Correct") {
                     activators {
+                        val quiz = QuizController()
+                        quiz.current = quiz.quizSelect()
                         regex(Pattern.compile(re, Pattern.CASE_INSENSITIVE).toRegex())
 //                        intent("Answer:NewMexico")
                     }
                     action {
+                        val quiz = QuizController(context)
+                        quiz.current = quiz.quizSelect()
                         reactions.say("Правильно! Это $place.")
                         reactions.go("/End")
                     }
