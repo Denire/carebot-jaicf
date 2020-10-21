@@ -428,6 +428,15 @@ object MainScenario : Scenario() {
             }
         }
 
+        state("NoInput") {
+            globalActivators {
+                regex("/noInput")
+            }
+            action {
+                reactions.say("Что-что?")
+            }
+        }
+        
         fallback {
             logger.info("Global fallback. Utterance: " + request.input)
             logger.info(this.context.session.toString())
