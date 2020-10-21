@@ -11,27 +11,10 @@ import com.justai.jaicf.hook.BotRequestHook
 import com.justai.jaicf.model.scenario.Scenario
 import java.util.regex.Pattern
 
-fun quizSelect(): Triple<String,String,String> {
-    val images:MutableList<Triple<String,String,String>> = mutableListOf(
-        Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg",
-               "Остин, штат Техас", ".*(остин|техас).*"),
-        Triple("https://upload.wikimedia.org/wikipedia/commons/2/2b/Sangre_de_Christo_Mountains-Winter_sunset.jpg",
-               "горный массив Сангре-де-Кристо, штат Нью-Мехико", ".*(мехик|мексик).*"),
-        Triple("https://upload.wikimedia.org/wikipedia/commons/f/f9/Hotel_Santa_Fe_New_Mexico.jpg",
-               "Санта-Фе, Нью-Мехико", ".*(фе|фэ|мехик|мексик).*"),
-        Triple("https://upload.wikimedia.org/wikipedia/commons/b/ba/Albuquerque_aerial.jpg",
-	       "Альбукерке, Нью-Мехико", ".*(альбукерке|мехик|мексик).*"),
-        Triple("https://upload.wikimedia.org/wikipedia/commons/3/36/Islamorada_Florida.jpg",
-               "Флорида", ".*(флорида).*"),
-        Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/2007_Miami_sunset_3.jpg/1280px-2007_Miami_sunset_3.jpg",
-               "Флорида", ".*(флорида).*"),
-        Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Biscayne_Boulevard_night_20101202.jpg/1920px-Biscayne_Boulevard_night_20101202.jpg",
-               "Флорида", ".*(флорида).*")
-    )
-    return images.shuffled().take(1)[0]
+fun randSelect(xs:MutableList<String>): String {
+    return xs.shuffled().take(1)[0]
 }
-
-fun randSelect(xs: MutableList<String>): String {
+fun randSelect(xs:MutableList<Triple<String,String,String>>): Triple<String,String,String> {
     return xs.shuffled().take(1)[0]
 }
 
@@ -380,9 +363,23 @@ object MainScenario : Scenario() {
             }
             state("Guess") {
                 var counter = 0
-                val (img,place,re) = quizSelect()
-                action {
-
+                val (img,place,re) = 
+                        randSelect(mutableListOf(
+                                Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg",
+                                        "Остин, штат Техас", ".*(остин|техас).*"),
+                                Triple("https://upload.wikimedia.org/wikipedia/commons/2/2b/Sangre_de_Christo_Mountains-Winter_sunset.jpg",
+                                        "горный массив Сангре-де-Кристо, штат Нью-Мехико", ".*(мехик|мексик).*"),
+                                Triple("https://upload.wikimedia.org/wikipedia/commons/f/f9/Hotel_Santa_Fe_New_Mexico.jpg",
+                                        "Санта-Фе, Нью-Мехико", ".*(фе|фэ|мехик|мексик).*"),
+                                Triple("https://upload.wikimedia.org/wikipedia/commons/b/ba/Albuquerque_aerial.jpg",
+                                        "Альбукерке, Нью-Мехико", ".*(альбукерке|мехик|мексик).*"),
+                                Triple("https://upload.wikimedia.org/wikipedia/commons/3/36/Islamorada_Florida.jpg",
+                                        "Флорида", ".*(флорида).*"),
+                                Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/2007_Miami_sunset_3.jpg/1280px-2007_Miami_sunset_3.jpg",
+                                        "Флорида", ".*(флорида).*"),
+                                Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Biscayne_Boulevard_night_20101202.jpg/1920px-Biscayne_Boulevard_night_20101202.jpg",
+                                        "Флорида", ".*(флорида).*")))
+		action {
                     reactions.aimybox?.image(img)
                     reactions.telegram?.image(img)
                     reactions.say("Как ты думаешь, где это?")
