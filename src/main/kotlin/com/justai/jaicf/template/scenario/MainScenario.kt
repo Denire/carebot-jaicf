@@ -10,7 +10,6 @@ import com.justai.jaicf.hook.AfterProcessHook
 import com.justai.jaicf.hook.BeforeProcessHook
 import com.justai.jaicf.hook.BotRequestHook
 import com.justai.jaicf.model.scenario.Scenario
-import com.justai.jaicf.template.controllers.QuizController
 import java.util.regex.Pattern
 
 fun randSelect(xs:MutableList<String>): String {
@@ -393,8 +392,6 @@ object MainScenario : Scenario() {
 //                        intent("Answer:NewMexico")
                     }
                     action {
-                        val quiz = QuizController(context)
-                        quiz.current = quiz.quizSelect()
                         reactions.say("Правильно! Это $place.")
                         reactions.go("/End")
                     }
