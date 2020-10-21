@@ -363,7 +363,7 @@ object MainScenario : Scenario() {
             }
             state("Guess") {
                 var counter = 0
-                val (img,place,re) = 
+                var (img,place,re) =
                         randSelect(mutableListOf(
                                 Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg",
                                         "Остин, штат Техас", ".*(остин|техас).*"),
@@ -379,7 +379,7 @@ object MainScenario : Scenario() {
                                         "Флорида", ".*(флорида).*"),
                                 Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Biscayne_Boulevard_night_20101202.jpg/1920px-Biscayne_Boulevard_night_20101202.jpg",
                                         "Флорида", ".*(флорида).*")))
-		action {
+                action {
                     reactions.aimybox?.image(img)
                     reactions.telegram?.image(img)
                     reactions.say("Как ты думаешь, где это?")
@@ -436,9 +436,11 @@ object MainScenario : Scenario() {
 					", " + this.context.dialogContext.transitions.toString()
             )
             reactions.sayRandom(
-                "К сожалению, я не могу ничего сказать по этому поводу.",
-                "Этого я пока что не знаю.",
-                "Извини, я не знаю."
+                    "К сожалению, я не могу ничего сказать по этому поводу.",
+                    "Этого я пока что не знаю.",
+                    "Извини, я не знаю.",
+                    "Увы, я не знаю.",
+                    "Увы, я не могу ничего сказать по этому поводу."
             )
             reactions.go("/Initiate")
         }
