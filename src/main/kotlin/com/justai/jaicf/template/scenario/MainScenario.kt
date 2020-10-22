@@ -432,17 +432,22 @@ object MainScenario : Scenario() {
             }
             action {
                 reactions.say("А теперь что-то действительно интересное! Викторина.")
+                var q = QuizController(context)
+                q.selected = q.quizSelect()
                 reactions.go("Guess")
             }
             state("Guess") {
                 action {
                     var q = QuizController(context)
-                    q.selected = q.quizSelect()
                     val (img, place, _) = q.selected
                     logger.info("Selected $place")
                     reactions.aimybox?.image(img)
                     reactions.telegram?.image(img)
-                    reactions.say("Как ты думаешь, какой это штат?")
+                    if (q.attempt == null) {
+                        reactions.say("Как ты думаешь, какой это штат?")
+                    } else {
+                        reactions.say("Подсказка: Техас, Нью Мексико или Флорида?")
+                    }
                 }
 
                 // COPY PASTE!!! VERY BAD
@@ -461,6 +466,7 @@ object MainScenario : Scenario() {
                                 reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                         "Ну нет... Ещё попытка!",
                                         "Мне кажется, это где-то в другом месте. Еще попытка?")
+                                reactions.go("../Guess")
                             } else {
                                 q.attempt == q.attempt!! + 1
                                 if (q.attempt!! > 2) {
@@ -472,6 +478,7 @@ object MainScenario : Scenario() {
                                     reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                             "Ну нет... Ещё попытка!",
                                             "Мне кажется, это где-то в другом месте. Еще попытка?")
+                                    reactions.go("../Guess")
                                 }
                             }
                         }
@@ -492,6 +499,7 @@ object MainScenario : Scenario() {
                                 reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                         "Ну нет... Ещё попытка!",
                                         "Мне кажется, это где-то в другом месте. Еще попытка?")
+                                reactions.go("../Guess")
                             } else {
                                 q.attempt == q.attempt!! + 1
                                 if (q.attempt!! > 2) {
@@ -503,6 +511,7 @@ object MainScenario : Scenario() {
                                     reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                             "Ну нет... Ещё попытка!",
                                             "Мне кажется, это где-то в другом месте. Еще попытка?")
+                                    reactions.go("../Guess")
                                 }
                             }
                         }
@@ -523,6 +532,7 @@ object MainScenario : Scenario() {
                                 reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                         "Ну нет... Ещё попытка!",
                                         "Мне кажется, это где-то в другом месте. Еще попытка?")
+                                reactions.go("../Guess")
                             } else {
                                 q.attempt == q.attempt!! + 1
                                 if (q.attempt!! > 2) {
@@ -534,12 +544,14 @@ object MainScenario : Scenario() {
                                     reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                             "Ну нет... Ещё попытка!",
                                             "Мне кажется, это где-то в другом месте. Еще попытка?")
+                                    reactions.go("../Guess")
                                 }
                             }
                         }
                     }
                 }
 
+//                TODO: check path
                 fallback {
                     var q = QuizController(context)
                     val (_, place, _) = q.selected
@@ -548,6 +560,7 @@ object MainScenario : Scenario() {
                         reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                 "Ну нет... Ещё попытка!",
                                 "Мне кажется, это где-то в другом месте. Еще попытка?")
+                        reactions.go("Guess")
                     } else {
                         q.attempt == q.attempt!! + 1
                         if (q.attempt!! > 2) {
@@ -559,6 +572,7 @@ object MainScenario : Scenario() {
                             reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                     "Ну нет... Ещё попытка!",
                                     "Мне кажется, это где-то в другом месте. Еще попытка?")
+                            reactions.go("Guess")
                         }
                     }
                 }
