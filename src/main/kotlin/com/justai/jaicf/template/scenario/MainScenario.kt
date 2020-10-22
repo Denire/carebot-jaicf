@@ -431,7 +431,7 @@ object MainScenario : Scenario() {
                 regex("/quiz")
             }
             action {
-                reactions.say("А теперь что-то действительно интересное! Викторина.")
+                reactions.sayRandom("А теперь что-то действительно интересное! Викторина.", "А теперь... Викторина!")
                 var q = QuizController(context)
                 q.selected = q.quizSelect()
                 q.attempt = null
