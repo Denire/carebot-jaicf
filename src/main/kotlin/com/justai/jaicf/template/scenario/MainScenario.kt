@@ -155,14 +155,24 @@ object MainScenario : Scenario() {
                 action { reactions.go("/Reward") }
             }
 
+            state("Supermarket") {
+                activators { intent("Request:Supermarket") }
+                action { reactions.go("/Ask/Supermarket") }
+            }
+
+            state("BadAdv") {
+                activators { intent("Request:BadAdv") }
+                action { reactions.go("/Ask/BadAdv") }
+            }
+
             state("Obsession") {
-		activators {
+                activators {
                     intent("Obsession")
-		}
-		action {
+                }
+                action {
                     reactions.sayRandom("Марк, давай поговорим об этом позже.", "Об этом я тебе еще как-нибудь расскажу.")
                     reactions.go("/Initiate")
-		}
+                }
             }
         }
 
@@ -248,7 +258,6 @@ object MainScenario : Scenario() {
 			// "Игра в магазин"
             state("Supermarket") {
                 var counter = 0
-                globalActivators { intent("Request:Supermarket") }
                 action {
                     reactions.say("Вот ты приходишь в магазин и, например, я - продавец. Ты должен что-то купить, например, мама или папа тебя попросили: у нас закончились хлеб и молоко, сходи купи пожалуйста в магазин. Что ты будешь делать?")
                 }
@@ -274,7 +283,7 @@ object MainScenario : Scenario() {
                             fallback { reactions.go("../end") }
                             state("end") {
                                 action {
-                                    reactions.say("Правильный ответ - это отойти от кассы, взять другое молоко и купить его.")
+                                    reactions.say("Правильный ответ - это отойти от кассы и взять другой товар, например, который подешевле.")
                                     reactions.go("/Reward")
                                 }
                             }
