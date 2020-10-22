@@ -453,10 +453,14 @@ object MainScenario : Scenario() {
                         val (_, place, intent) = q.selected
                         if (intent == "Answer:Texas") {
                             reactions.say("Правильно! Это $place.")
+                            reactions.go("/End")
                         }
                         else {
                             if (q.attempt == null) {
                                 q.attempt = 1
+                                reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
+                                        "Ну нет... Ещё попытка!",
+                                        "Мне кажется, это где-то в другом месте. Еще попытка?")
                             } else {
                                 q.attempt == q.attempt!! + 1
                                 if (q.attempt!! > 2) {
@@ -480,10 +484,14 @@ object MainScenario : Scenario() {
                         val (_, place, intent) = q.selected
                         if (intent == "Answer:NewMexico") {
                             reactions.say("Правильно! Это $place.")
+                            reactions.go("/End")
                         }
                         else {
                             if (q.attempt == null) {
                                 q.attempt = 1
+                                reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
+                                        "Ну нет... Ещё попытка!",
+                                        "Мне кажется, это где-то в другом месте. Еще попытка?")
                             } else {
                                 q.attempt == q.attempt!! + 1
                                 if (q.attempt!! > 2) {
@@ -507,10 +515,14 @@ object MainScenario : Scenario() {
                         val (_, place, intent) = q.selected
                         if (intent == "Answer:Florida") {
                             reactions.say("Правильно! Это $place.")
+                            reactions.go("/End")
                         }
                         else {
                             if (q.attempt == null) {
                                 q.attempt = 1
+                                reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
+                                        "Ну нет... Ещё попытка!",
+                                        "Мне кажется, это где-то в другом месте. Еще попытка?")
                             } else {
                                 q.attempt == q.attempt!! + 1
                                 if (q.attempt!! > 2) {
