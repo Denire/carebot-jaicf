@@ -466,7 +466,7 @@ object MainScenario : Scenario() {
                                 reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                         "Ну нет... Ещё попытка!",
                                         "Мне кажется, это где-то в другом месте. Еще попытка?")
-                                reactions.go("../Guess")
+                                reactions.go("..")
                             } else {
                                 q.attempt == q.attempt!! + 1
                                 if (q.attempt!! > 2) {
@@ -478,7 +478,7 @@ object MainScenario : Scenario() {
                                     reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                             "Ну нет... Ещё попытка!",
                                             "Мне кажется, это где-то в другом месте. Еще попытка?")
-                                    reactions.go("../Guess")
+                                    reactions.go("..")
                                 }
                             }
                         }
@@ -499,7 +499,7 @@ object MainScenario : Scenario() {
                                 reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                         "Ну нет... Ещё попытка!",
                                         "Мне кажется, это где-то в другом месте. Еще попытка?")
-                                reactions.go("../Guess")
+                                reactions.go("..")
                             } else {
                                 q.attempt == q.attempt!! + 1
                                 if (q.attempt!! > 2) {
@@ -511,7 +511,7 @@ object MainScenario : Scenario() {
                                     reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                             "Ну нет... Ещё попытка!",
                                             "Мне кажется, это где-то в другом месте. Еще попытка?")
-                                    reactions.go("../Guess")
+                                    reactions.go("..")
                                 }
                             }
                         }
@@ -532,7 +532,7 @@ object MainScenario : Scenario() {
                                 reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                         "Ну нет... Ещё попытка!",
                                         "Мне кажется, это где-то в другом месте. Еще попытка?")
-                                reactions.go("../Guess")
+                                reactions.go("..")
                             } else {
                                 q.attempt == q.attempt!! + 1
                                 if (q.attempt!! > 2) {
@@ -544,7 +544,7 @@ object MainScenario : Scenario() {
                                     reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                             "Ну нет... Ещё попытка!",
                                             "Мне кажется, это где-то в другом месте. Еще попытка?")
-                                    reactions.go("../Guess")
+                                    reactions.go("..")
                                 }
                             }
                         }
@@ -560,7 +560,6 @@ object MainScenario : Scenario() {
                         reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                 "Ну нет... Ещё попытка!",
                                 "Мне кажется, это где-то в другом месте. Еще попытка?")
-                        reactions.go("../../Guess")
                     } else {
                         q.attempt == q.attempt!! + 1
                         if (q.attempt!! > 2) {
@@ -572,7 +571,6 @@ object MainScenario : Scenario() {
                             reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
                                     "Ну нет... Ещё попытка!",
                                     "Мне кажется, это где-то в другом месте. Еще попытка?")
-                            reactions.go("../../Guess")
                         }
                     }
                 }
