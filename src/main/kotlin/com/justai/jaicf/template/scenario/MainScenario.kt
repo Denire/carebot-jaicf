@@ -235,7 +235,7 @@ object MainScenario : Scenario() {
             }
 
             state("Music") {
-                action { reactions.say("Марк, а ты какую музыку ты любишь?") }
+                action { reactions.say("Марк, а какую музыку ты любишь?") }
                 fallback { reactions.go("../1") }
                 state("1") {
                     action {
