@@ -545,6 +545,9 @@ object MainScenario : Scenario() {
                     val (_, place, _) = q.selected
                     if (q.attempt == null) {
                         q.attempt = 1
+                        reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
+                                "Ну нет... Ещё попытка!",
+                                "Мне кажется, это где-то в другом месте. Еще попытка?")
                     } else {
                         q.attempt == q.attempt!! + 1
                         if (q.attempt!! > 2) {
