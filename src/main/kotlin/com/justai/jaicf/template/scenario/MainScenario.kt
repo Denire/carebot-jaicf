@@ -512,6 +512,7 @@ object MainScenario : Scenario() {
                     reactions.sayRandom("я не слышу.")
                 } else {
                     if (ni.attempts!! > 2) {
+                        ni.attempts = null
                         reactions.go("/End")
                     }
                     else {
