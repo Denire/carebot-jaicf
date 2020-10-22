@@ -183,10 +183,11 @@ object MainScenario : Scenario() {
 
         state("Initiate") {
             action {
-                reactions.sayRandom(
-                    "А сейчас можно я тебя сама кое о чем спрошу?",
-                    "Можно я тебя кое-что спрошу?"
-                )
+//                reactions.sayRandom(
+//                    "А сейчас можно я тебя сама кое о чем спрошу?",
+//                    "Можно я тебя кое-что спрошу?"
+//                )
+                reactions.aimybox?.audio("http://geoassistant.ru/letmeaskyou.ogg")
             }
             state("Yes") {
                 activators {
@@ -419,7 +420,6 @@ object MainScenario : Scenario() {
                 regex("/quiz")
             }
             action {
-		reactions.aimybox?.image("http://geoassistant.ru/diana.jpg")
                 reactions.say("А теперь что-то действительно интересное! Викторина.")
                 reactions.go("Guess")
             }
@@ -521,13 +521,14 @@ object MainScenario : Scenario() {
 					", backStateStack" + this.context.dialogContext.backStateStack.toString() +
 					", " + this.context.dialogContext.transitions.toString()
             )
-            reactions.sayRandom(
-                    "К сожалению, я не могу ничего сказать по этому поводу.",
-                    "Этого я пока что не знаю.",
-                    "Извини, я не знаю.",
-                    "Увы, я не знаю.",
-                    "Увы, я не могу ничего сказать по этому поводу."
-            )
+//            reactions.sayRandom(
+//                    "К сожалению, я не могу ничего сказать по этому поводу.",
+//                    "Этого я пока что не знаю.",
+//                    "Извини, я не знаю.",
+//                    "Увы, я не знаю.",
+//                    "Увы, я не могу ничего сказать по этому поводу."
+//            )
+            reactions.aimybox?.audio("http://geoassistant.ru/nomatch.ogg")
             reactions.go("/Initiate")
         }
     }
