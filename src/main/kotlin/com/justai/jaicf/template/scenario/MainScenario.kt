@@ -199,7 +199,7 @@ object MainScenario : Scenario() {
 //                    "А сейчас можно я тебя сама кое о чем спрошу?",
 //                    "Можно я тебя кое-что спрошу?"
 //                )
-                reactions.aimybox?.audio("http://geoassistant.ru/letmeaskyou.ogg")
+//                reactions.aimybox?.audio("http://geoassistant.ru/letmeaskyou.ogg")
             }
             state("Yes") {
                 activators {
@@ -434,6 +434,7 @@ object MainScenario : Scenario() {
                 reactions.say("А теперь что-то действительно интересное! Викторина.")
                 var q = QuizController(context)
                 q.selected = q.quizSelect()
+                q.attempt = null
                 reactions.go("Guess")
             }
             state("Guess") {
@@ -446,7 +447,7 @@ object MainScenario : Scenario() {
                     if (q.attempt == null) {
                         reactions.say("Как ты думаешь, какой это штат?")
                     } else {
-                        reactions.say("Подсказка: Техас, Нью Мексико или Флорида?")
+                        reactions.say("Подсказка: Техас, Нью Мексико или Флорида.")
                     }
                 }
 
@@ -468,7 +469,7 @@ object MainScenario : Scenario() {
                                         "Мне кажется, это где-то в другом месте. Еще попытка?")
                                 reactions.go("..")
                             } else {
-                                q.attempt == q.attempt!! + 1
+                                q.attempt = q.attempt!! + 1
                                 if (q.attempt!! > 2) {
                                     q.attempt = null
                                     reactions.say("А на самом деле это $place.")
@@ -501,7 +502,7 @@ object MainScenario : Scenario() {
                                         "Мне кажется, это где-то в другом месте. Еще попытка?")
                                 reactions.go("..")
                             } else {
-                                q.attempt == q.attempt!! + 1
+                                q.attempt = q.attempt!! + 1
                                 if (q.attempt!! > 2) {
                                     q.attempt = null
                                     reactions.say("А на самом деле это $place.")
@@ -534,7 +535,7 @@ object MainScenario : Scenario() {
                                         "Мне кажется, это где-то в другом месте. Еще попытка?")
                                 reactions.go("..")
                             } else {
-                                q.attempt == q.attempt!! + 1
+                                q.attempt = q.attempt!! + 1
                                 if (q.attempt!! > 2) {
                                     q.attempt = null
                                     reactions.say("А на самом деле это $place.")
@@ -561,7 +562,7 @@ object MainScenario : Scenario() {
                                 "Ну нет... Ещё попытка!",
                                 "Мне кажется, это где-то в другом месте. Еще попытка?")
                     } else {
-                        q.attempt == q.attempt!! + 1
+                        q.attempt = q.attempt!! + 1
                         if (q.attempt!! > 2) {
                             q.attempt = null
                             reactions.say("А на самом деле это $place.")
@@ -632,14 +633,14 @@ object MainScenario : Scenario() {
 					", backStateStack" + this.context.dialogContext.backStateStack.toString() +
 					", " + this.context.dialogContext.transitions.toString()
             )
-//            reactions.sayRandom(
-//                    "К сожалению, я не могу ничего сказать по этому поводу.",
-//                    "Этого я пока что не знаю.",
-//                    "Извини, я не знаю.",
-//                    "Увы, я не знаю.",
-//                    "Увы, я не могу ничего сказать по этому поводу."
-//            )
-            reactions.aimybox?.audio("http://geoassistant.ru/nomatch.ogg")
+            reactions.sayRandom(
+                    "К сожалению, я не могу ничего сказать по этому поводу.",
+                    "Этого я пока что не знаю.",
+                    "Извини, я не знаю.",
+                    "Увы, я не знаю.",
+                    "Увы, я не могу ничего сказать по этому поводу."
+            )
+//            reactions.aimybox?.audio("http://geoassistant.ru/nomatch.ogg")
             reactions.go("/Initiate")
         }
     }
