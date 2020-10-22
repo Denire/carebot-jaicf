@@ -419,6 +419,7 @@ object MainScenario : Scenario() {
                 regex("/quiz")
             }
             action {
+		reactions.aimybox?.image("http://geoassistant.ru/diana.jpg")
                 reactions.say("А теперь что-то действительно интересное! Викторина.")
                 reactions.go("Guess")
             }
