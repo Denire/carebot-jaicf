@@ -444,11 +444,7 @@ object MainScenario : Scenario() {
                     logger.info("Selected $place")
                     reactions.aimybox?.image(img)
                     reactions.telegram?.image(img)
-                    if (q.attempt == null) {
-                        reactions.say("Как ты думаешь, какой это штат?")
-                    } else {
-                        reactions.say("Подсказка: Техас, Нью Мексико или Флорида.")
-                    }
+                    reactions.say("Как ты думаешь, какой это штат? Техас, Нью Мексико или Флорида.")
                 }
 
                 // COPY PASTE!!! VERY BAD
