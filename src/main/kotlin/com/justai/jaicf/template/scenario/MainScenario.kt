@@ -434,17 +434,17 @@ object MainScenario : Scenario() {
                 regex("/noInput")
             }
             action {
-                var attempts = NoinputController(context).attempts
-                logger.info("Attempts: $attempts")
-                if (attempts == null) {
-                    attempts = 1
+                var ni = NoinputController(context)
+                logger.info("Attempts: $ni.attempts")
+                if (ni.attempts == null) {
+                    ni.attempts = 1
                     reactions.sayRandom("я не слышу.")
                 } else {
-                    if (attempts > 2) {
+                    if (ni.attempts!! > 2) {
                         reactions.go("/End")
                     }
                     else {
-                        attempts += 1
+                        ni.attempts = ni.attempts!! + 1
                         reactions.sayRandom("что? я не слышу.", "я не слышу. что?")
                     }
 
