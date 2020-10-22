@@ -438,7 +438,7 @@ object MainScenario : Scenario() {
                 action {
                     var q = QuizController(context)
                     q.selected = q.quizSelect()
-                    val (place, img, _) = q.selected
+                    val (img, place, _) = q.selected
                     logger.info("Selected $place")
                     reactions.aimybox?.image(img)
                     reactions.telegram?.image(img)
@@ -450,7 +450,7 @@ object MainScenario : Scenario() {
                     activators { intent("Answer:Texas") }
                     action {
                         var q = QuizController(context)
-                        val (place, _, intent) = q.selected
+                        val (_, place, intent) = q.selected
                         if (intent == "Answer:Texas") {
                             reactions.say("Правильно! Это $place.")
                         }
@@ -477,7 +477,7 @@ object MainScenario : Scenario() {
                     activators { intent("Answer:NewMexico") }
                     action {
                         var q = QuizController(context)
-                        val (place, _, intent) = q.selected
+                        val (_, place, intent) = q.selected
                         if (intent == "Answer:NewMexico") {
                             reactions.say("Правильно! Это $place.")
                         }
@@ -504,7 +504,7 @@ object MainScenario : Scenario() {
                     activators { intent("Answer:Florida") }
                     action {
                         var q = QuizController(context)
-                        val (place, _, intent) = q.selected
+                        val (_, place, intent) = q.selected
                         if (intent == "Answer:Florida") {
                             reactions.say("Правильно! Это $place.")
                         }
@@ -530,7 +530,7 @@ object MainScenario : Scenario() {
 
                 fallback {
                     var q = QuizController(context)
-                    val (place, _, intent) = q.selected
+                    val (_, place, _) = q.selected
                     if (q.attempt == null) {
                         q.attempt = 1
                     } else {
