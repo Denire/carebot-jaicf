@@ -179,6 +179,17 @@ object MainScenario : Scenario() {
                     reactions.go("/Initiate")
                 }
             }
+
+            state("Stop") {
+               activators { intent("Request:End") }
+                action {
+                    reactions.sayRandom("Окей.", "Хорошо.")
+                    reactions.go("/End")
+                }
+            }
+
+
+
         }
 
         state("Initiate") {
