@@ -11,6 +11,7 @@ import com.justai.jaicf.hook.BeforeProcessHook
 import com.justai.jaicf.hook.BotRequestHook
 import com.justai.jaicf.model.scenario.Scenario
 import com.justai.jaicf.template.controllers.NoinputController
+import com.justai.jaicf.template.controllers.QuizController
 import java.util.regex.Pattern
 
 fun randSelect(xs:MutableList<String>): String {
@@ -434,51 +435,122 @@ object MainScenario : Scenario() {
                 reactions.go("Guess")
             }
             state("Guess") {
-                var counter = 0
-                val (img,place,re) =
-                        randSelect(mutableListOf(
-                                Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Austin_Texas_Lake_Front.jpg/800px-Austin_Texas_Lake_Front.jpg",
-                                        "Остин, штат Техас", ".*(остин|техас).*"),
-                                Triple("https://upload.wikimedia.org/wikipedia/commons/2/2b/Sangre_de_Christo_Mountains-Winter_sunset.jpg",
-                                        "горный массив Сангре-де-Кристо, штат Нью-Мехико", ".*(мехик|мексик).*"),
-                                Triple("https://upload.wikimedia.org/wikipedia/commons/f/f9/Hotel_Santa_Fe_New_Mexico.jpg",
-                                        "Санта-Фе, Нью-Мехико", ".*(фе|фэ|мехик|мексик).*"),
-                                Triple("https://upload.wikimedia.org/wikipedia/commons/b/ba/Albuquerque_aerial.jpg",
-                                        "Альбукерке, Нью-Мехико", ".*(альбукерке|мехик|мексик).*"),
-                                Triple("https://upload.wikimedia.org/wikipedia/commons/3/36/Islamorada_Florida.jpg",
-                                        "Флорида", ".*(флорида).*"),
-                                Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/2007_Miami_sunset_3.jpg/1280px-2007_Miami_sunset_3.jpg",
-                                        "Флорида", ".*(флорида).*"),
-                                Triple("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Biscayne_Boulevard_night_20101202.jpg/1920px-Biscayne_Boulevard_night_20101202.jpg",
-                                        "Флорида", ".*(флорида).*")))
                 action {
+                    var q = QuizController(context)
+                    q.selected = q.quizSelect()
+                    val (place, img, _) = q.selected
                     logger.info("Selected $place")
                     reactions.aimybox?.image(img)
                     reactions.telegram?.image(img)
-                    reactions.say("Как ты думаешь, где это?")
+                    reactions.say("Как ты думаешь, какой это штат?")
                 }
-                state("Correct") {
-                    activators {
-                        regex(Pattern.compile(re, Pattern.CASE_INSENSITIVE).toRegex())
-//                        intent("Answer:NewMexico")
-                    }
+
+                // COPY PASTE!!! VERY BAD
+                state("Texas") {
+                    activators { intent("Answer:Texas") }
                     action {
-                        reactions.say("Правильно! Это $place.")
-                        reactions.go("/End")
+                        var q = QuizController(context)
+                        val (place, _, intent) = q.selected
+                        if (intent == "Answer:Texas") {
+                            reactions.say("Правильно! Это $place.")
+                        }
+                        else {
+                            if (q.attempt == null) {
+                                q.attempt = 1
+                            } else {
+                                q.attempt == q.attempt!! + 1
+                                if (q.attempt!! > 2) {
+                                    q.attempt = null
+                                    reactions.say("А на самом деле это $place.")
+                                    reactions.go("/End")
+                                }
+                                else {
+                                    reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
+                                            "Ну нет... Ещё попытка!",
+                                            "Мне кажется, это где-то в другом месте. Еще попытка?")
+                                }
+                            }
+                        }
                     }
                 }
+                state("NewMexico") {
+                    activators { intent("Answer:NewMexico") }
+                    action {
+                        var q = QuizController(context)
+                        val (place, _, intent) = q.selected
+                        if (intent == "Answer:NewMexico") {
+                            reactions.say("Правильно! Это $place.")
+                        }
+                        else {
+                            if (q.attempt == null) {
+                                q.attempt = 1
+                            } else {
+                                q.attempt == q.attempt!! + 1
+                                if (q.attempt!! > 2) {
+                                    q.attempt = null
+                                    reactions.say("А на самом деле это $place.")
+                                    reactions.go("/End")
+                                }
+                                else {
+                                    reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
+                                            "Ну нет... Ещё попытка!",
+                                            "Мне кажется, это где-то в другом месте. Еще попытка?")
+                                }
+                            }
+                        }
+                    }
+                }
+                state("Florida") {
+                    activators { intent("Answer:Florida") }
+                    action {
+                        var q = QuizController(context)
+                        val (place, _, intent) = q.selected
+                        if (intent == "Answer:Florida") {
+                            reactions.say("Правильно! Это $place.")
+                        }
+                        else {
+                            if (q.attempt == null) {
+                                q.attempt = 1
+                            } else {
+                                q.attempt == q.attempt!! + 1
+                                if (q.attempt!! > 2) {
+                                    q.attempt = null
+                                    reactions.say("А на самом деле это $place.")
+                                    reactions.go("/End")
+                                }
+                                else {
+                                    reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
+                                            "Ну нет... Ещё попытка!",
+                                            "Мне кажется, это где-то в другом месте. Еще попытка?")
+                                }
+                            }
+                        }
+                    }
+                }
+
                 fallback {
-                    counter += 1
-                    if (counter > 2) {
-                        counter = 0
-                        reactions.say("А на самом деле это $place.")
-                        reactions.go("/End")
+                    var q = QuizController(context)
+                    val (place, _, intent) = q.selected
+                    if (q.attempt == null) {
+                        q.attempt = 1
                     } else {
-                        reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
-					    "Ну нет... Ещё попытка!", 
-					    "Мне кажется, это где-то в другом месте. Еще попытка?")
+                        q.attempt == q.attempt!! + 1
+                        if (q.attempt!! > 2) {
+                            q.attempt = null
+                            reactions.say("А на самом деле это $place.")
+                            reactions.go("/End")
+                        }
+                        else {
+                            reactions.sayRandom("Мне кажется, что это не так! Попробуй еще раз.",
+                                    "Ну нет... Ещё попытка!",
+                                    "Мне кажется, это где-то в другом месте. Еще попытка?")
+                        }
                     }
                 }
+
+
+
+
             }
 
         }
