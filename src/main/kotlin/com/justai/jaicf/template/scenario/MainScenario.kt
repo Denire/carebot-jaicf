@@ -494,8 +494,8 @@ object MainScenario : Scenario() {
         state("End") {
             action {
                 reactions.aimybox?.endConversation()
-                reactions.go("/")
-                reactions.telegram?.say("--- конец диалога ---")
+//                reactions.go("/")
+//                reactions.telegram?.say("--- конец диалога ---")
             }
         }
 
@@ -506,6 +506,7 @@ object MainScenario : Scenario() {
             action {
                 var ni = NoinputController(context)
                 logger.info("Attempts: ${ni.attempts}")
+                logger.info(context.dialogContext.backStateStack.last)
                 if (ni.attempts == null) {
                     ni.attempts = 1
                     reactions.sayRandom("я не слышу.")
