@@ -10,6 +10,7 @@ import com.justai.jaicf.hook.AfterProcessHook
 import com.justai.jaicf.hook.BeforeProcessHook
 import com.justai.jaicf.hook.BotRequestHook
 import com.justai.jaicf.model.scenario.Scenario
+import com.justai.jaicf.template.controllers.NoinputController
 import java.util.regex.Pattern
 
 fun randSelect(xs:MutableList<String>): String {
@@ -428,12 +429,26 @@ object MainScenario : Scenario() {
             }
         }
 
-        state("NoInput") {
+        state("NoInput", noContext = true) {
             globalActivators {
                 regex("/noInput")
             }
             action {
-                reactions.say("Что-что?")
+                var attempts = NoinputController(context).attempts
+                logger.info("Attempts: $attempts")
+                if (attempts == null) {
+                    attempts = 1
+                    reactions.sayRandom("я не слышу.")
+                } else {
+                    if (attempts > 2) {
+                        reactions.go("/End")
+                    }
+                    else {
+                        attempts += 1
+                        reactions.sayRandom("что? я не слышу.", "я не слышу. что?")
+                    }
+
+                }
             }
         }
         
