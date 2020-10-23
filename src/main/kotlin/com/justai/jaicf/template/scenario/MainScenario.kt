@@ -195,10 +195,10 @@ object MainScenario : Scenario() {
 
         state("Initiate") {
             action {
-//                reactions.sayRandom(
-//                    "А сейчас можно я тебя сама кое о чем спрошу?",
-//                    "Можно я тебя кое-что спрошу?"
-//                )
+               reactions.sayRandom(
+                   "А сейчас можно я тебя сама кое о чем спрошу?",
+                   "Можно я тебя кое-что спрошу?"
+               )
 //                reactions.aimybox?.audio("http://geoassistant.ru/letmeaskyou.ogg")
             }
             state("Yes") {
