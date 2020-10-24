@@ -199,7 +199,7 @@ object MainScenario : Scenario() {
             action {
                var ic = InitiativeController(context)
                 ic.selected = ic.nextSelect()
-                val (prompt, st) = ic.selected
+                val (st, prompt) = ic.selected
                 reactions.say(prompt)
             }
             state("Yes") {
@@ -209,7 +209,7 @@ object MainScenario : Scenario() {
                 }
                 action {
                     var ic = InitiativeController(context)
-                    val (prompt, st) = ic.selected
+                    val (st, prompt) = ic.selected
                     reactions.sayRandom("Отлично", "Супер")
                     reactions.go("/Ask/$st")
                 }
