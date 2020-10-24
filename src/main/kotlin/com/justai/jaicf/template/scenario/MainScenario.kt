@@ -246,7 +246,7 @@ object MainScenario : Scenario() {
                 intent("Request:AskMe")
             }
             action {
-                val question = randSelect(mutableListOf("Cakes", "Supermarket", "BadAdv", "Friend", "Art", "Music", "Cop"))
+                val question = randSelect(mutableListOf("Food", "Supermarket", "BadAdv", "Friend", "Art", "Music", "Cop"))
                 reactions.go(question)
             }
 
