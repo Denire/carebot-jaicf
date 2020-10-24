@@ -12,6 +12,7 @@ import com.justai.jaicf.hook.BotRequestHook
 import com.justai.jaicf.model.scenario.Scenario
 import com.justai.jaicf.template.controllers.NoinputController
 import com.justai.jaicf.template.controllers.QuizController
+import com.justai.jaicf.template.controllers.InitiativeController
 import java.util.regex.Pattern
 
 fun randSelect(xs:MutableList<String>): String {
@@ -196,11 +197,10 @@ object MainScenario : Scenario() {
         // TODO: ask specific thing
         state("Initiate") {
             action {
-               reactions.sayRandom(
-                   "А сейчас можно я тебя сама кое о чем спрошу?",
-                   "Можно я тебя кое-что спрошу?"
-               )
-//                reactions.aimybox?.audio("http://geoassistant.ru/letmeaskyou.ogg")
+               var ic = InitiativeController(context)
+                ic.selected = ic.nextSelect()
+                val (prompt, st) = ic.selected
+                reactions.say(prompt)
             }
             state("Yes") {
                 activators {
@@ -208,8 +208,10 @@ object MainScenario : Scenario() {
                     intent("Answer:Ask")
                 }
                 action {
+                    var ic = InitiativeController(context)
+                    val (prompt, st) = ic.selected
                     reactions.sayRandom("Отлично", "Супер")
-                    reactions.go("/Ask")
+                    reactions.go("/Ask/$st")
                 }
             }
             state("No") {
@@ -637,7 +639,8 @@ object MainScenario : Scenario() {
                     "Ты ведь знаешь только одну сторону дела.",
                     "Никто не знает.",
                     "Ой, а как это понимать? Кажется я об этом слышу впервые.",
-                    "Ой, мозги кипят"
+                    "Ой, мозги кипят",
+                    "Что-то я не догоняю"
             )
 //            reactions.aimybox?.audio("http://geoassistant.ru/nomatch.ogg")
             reactions.go("/Initiate")
