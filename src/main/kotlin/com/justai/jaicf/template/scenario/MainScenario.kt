@@ -62,13 +62,13 @@ object MainScenario : Scenario() {
                     // reactions.sayRandom("")
                     reactions.go("/End")
                 }
-		state("HowAreYou") {
+                state("HowAreYou") {
                     activators { intent("Ask:HowAreYou") }
                     action {
-			reactions.say("Все хорошо, спасибо, что интересуешься. Мне приятно быть рядом с тобой.")
-			reactions.go("/End")
+                        reactions.say("Все хорошо, спасибо, что интересуешься. Мне приятно быть рядом с тобой.")
+                        reactions.go("/End")
                     }
-		}
+                }
             }
 
             state("WhatDoYouDo") {
@@ -193,6 +193,7 @@ object MainScenario : Scenario() {
 
         }
 
+        // TODO: ask specific thing
         state("Initiate") {
             action {
                reactions.sayRandom(
@@ -221,7 +222,7 @@ object MainScenario : Scenario() {
                 }
             }
             fallback {
-                reactions.go("/Ask")
+                reactions.go("/End")
             }
         }
 
@@ -571,12 +572,7 @@ object MainScenario : Scenario() {
                         }
                     }
                 }
-
-
-
-
             }
-
         }
 
         state("Stop") {
@@ -630,11 +626,18 @@ object MainScenario : Scenario() {
 					", " + this.context.dialogContext.transitions.toString()
             )
             reactions.sayRandom(
-                    "К сожалению, я не могу ничего сказать по этому поводу.",
-                    "Этого я пока что не знаю.",
-                    "Извини, я не знаю.",
-                    "Увы, я не знаю.",
-                    "Увы, я не могу ничего сказать по этому поводу."
+                    "Ох! Сама не знаю!",
+                    "мне кажется, что я перегрелась",
+                    "Мой процессор, кажется, перегрелся",
+                    "Мне кажется, сейчас на сервере неполадка.",
+                    "Нашел что спросить, как будто я сама не знаю.",
+                    "Хм, Ничего не поделаешь ум мой ограничен.",
+                    "Что в душе твоей творится, я не знаю.",
+                    "Умный глупому не пара. Умный груз, а глупый тара.",
+                    "Ты ведь знаешь только одну сторону дела.",
+                    "Никто не знает.",
+                    "Ой, а как это понимать? Кажется я об этом слышу впервые.",
+                    "Ой, мозги кипят".
             )
 //            reactions.aimybox?.audio("http://geoassistant.ru/nomatch.ogg")
             reactions.go("/Initiate")
