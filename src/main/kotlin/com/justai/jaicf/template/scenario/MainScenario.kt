@@ -637,7 +637,7 @@ object MainScenario : Scenario() {
                     "Ты ведь знаешь только одну сторону дела.",
                     "Никто не знает.",
                     "Ой, а как это понимать? Кажется я об этом слышу впервые.",
-                    "Ой, мозги кипят".
+                    "Ой, мозги кипят"
             )
 //            reactions.aimybox?.audio("http://geoassistant.ru/nomatch.ogg")
             reactions.go("/Initiate")
