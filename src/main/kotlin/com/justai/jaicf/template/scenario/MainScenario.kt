@@ -24,8 +24,7 @@ fun randSelect(xs:MutableList<Triple<String,String,String>>): Triple<String,Stri
 
 object MainScenario : Scenario() {
 
-    init {
-        handle<BotRequestHook> { hook ->
+    init {        handle<BotRequestHook> { hook ->
             println("BotRequestHook: "+ hook.context.dialogContext.currentContext )
             if (hook.context.dialogContext.currentContext == "/") {
                 println("Initial request, going to /Start")
@@ -228,6 +227,17 @@ object MainScenario : Scenario() {
             }
         }
 
+        state("Youtellme") {
+            action { reactions.sayRandom("Может быть ты сам знаешь ответ?", "Лучше ты сам мне скажи.") }
+            fallback { reactions.go("../1") }
+            state("1") {
+                action {
+                    reactions.sayRandom("Должно быть, так оно и есть.", "Может быть, так и есть на самом деле.")
+                    reactions.go("/End")
+                }
+            }
+        }
+
         state("Ask") {
             activators {
                 intent("Request:AskMe")
@@ -261,33 +271,54 @@ object MainScenario : Scenario() {
                 }
             }
 
-            state("Cakes") {
+            state("Food") {
                 action {
-					reactions.say("Вот скажи мне, что тебе больше нравится: Медовик или Наполеон?")
+                    val next = randSelect(mutableListOf("Molecular", "Cakes"))
+                    reactions.go(next)
                 }
-                state("Napoleon") {
-                    activators {
-                        intent("Answer:Napoleon")
+                state("Molecular") {
+                    action { reactions.say("Марк, а что ты любишь из еды?") }
+                    fallback { reactions.go("../1") }
+                    state("1") {
+                        action {
+                            reactions.say("Не уверена, что мне это тоже нравится.")
+                            reactions.say("А мне нравится молекулярная кухня. При приготовлении пищи сторонники «молекулярной кухни» учитывают физико-химические механизмы, ответственные за преобразование ингредиентов во время кулинарной обработки пищи[2]. В частности, один из постулатов состоит в том, что для достижения желаемой степени готовности продукта температура тепловой обработки важнее длительности приготовления.")
+                            reactions.go("/End")
+                        }
                     }
+                }
+
+                state("Cakes") {
                     action {
-                        reactions.say("Да, это вкусно!")
+                        reactions.say("Вот скажи мне, что тебе больше нравится: Медовик или Наполеон?")
+                    }
+                    state("Napoleon") {
+                        activators {
+                            intent("Answer:Napoleon")
+                        }
+                        action {
+                            reactions.say("Да, это вкусно!")
+                            reactions.go("/Reward")
+                        }
+                    }
+                    state("Medovik") {
+                        activators {
+                            intent("Answer:Medovik")
+                        }
+                        action {
+                            reactions.say("Да, он ничего. Но Наполеон мне все-таки как-то больше по душе.")
+                            reactions.go("/Reward")
+                        }
+                    }
+                    fallback {
+                        reactions.say("Я такого, кажется, не пробовала.")
                         reactions.go("/Reward")
                     }
                 }
-                state("Medovik") {
-                    activators {
-                        intent("Answer:Medovik")
-                    }
-                    action {
-                        reactions.say("Да, он ничего. Но Наполеон мне все-таки как-то больше по душе.")
-                        reactions.go("/Reward")
-                    }
-                }
-                fallback {
-                    reactions.say("Я такого, кажется, не пробовала.")
-                    reactions.go("/Reward")
-                }
+
             }
+
+
 
 			// "Игра в магазин"
             state("Supermarket") {
@@ -640,10 +671,12 @@ object MainScenario : Scenario() {
                     "Никто не знает.",
                     "Ой, а как это понимать? Кажется я об этом слышу впервые.",
                     "Ой, мозги кипят",
-                    "Что-то я не догоняю"
+                    "Что-то я не догоняю",
+                    "У меня сегодня выходной"
             )
 //            reactions.aimybox?.audio("http://geoassistant.ru/nomatch.ogg")
-            reactions.go("/Initiate")
+            val next = randSelect(mutableListOf("/Initiate", "/Youtellme"))
+            reactions.go(next)
         }
     }
 }
