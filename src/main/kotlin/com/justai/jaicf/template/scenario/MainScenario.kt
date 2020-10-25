@@ -375,13 +375,7 @@ object MainScenario : Scenario() {
                     reactions.say("Марк если к тебе подходит полицейский и говорит предъявите документы. Как ты поступишь?")
                 }
                 fallback {
-                    counter += 1
-                    if (counter > 1) {
-                        counter = 0
-                        reactions.go("../Next")
-                    } else {
-                        reactions.sayRandom("что дальше?", "Главное - успокоиться!")
-                    }
+                    reactions.go("../Next")
                 }
 
                 state("Next") {
