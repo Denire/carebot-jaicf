@@ -246,7 +246,7 @@ object MainScenario : Scenario() {
                             "Может быть, так и есть на самом деле.",
                             "Не знаю, не знаю.",
                             "Может быть да, а может быть и нет.")
-                    reactions.go("/End")
+                    reactions.go("/Initiate")
                 }
             }
         }
