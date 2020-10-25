@@ -2,6 +2,7 @@ plugins {
     application
     kotlin("jvm") version "1.3.61"
     id("com.github.johnrengelman.shadow") version "5.0.0"
+    kotlin("plugin.serialization") version "1.3.61"
 }
 
 group = "com.justai.jaicf"
@@ -41,6 +42,7 @@ dependencies {
 
     implementation("com.justai.jaicf:aimybox:$jaicf")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0")
 
 }
 
