@@ -82,6 +82,7 @@ object MainScenario : Scenario() {
                         val abs = dc.query(q)
                         if (abs != null) {
                             reactions.say(abs)
+                            reactions.go("/End")
                         } else { reactions.go("/fallback") }
                     } else { reactions.go("/fallback") }
                 }
