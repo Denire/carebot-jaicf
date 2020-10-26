@@ -44,9 +44,9 @@ class DuckDuckGoClient() : WithLogger {
     fun getDefinition(query: String): String? {
         val raw = getDefinitionRaw(query) ?: return null
         val rawJson = Json.nonstrict.parse(DuckDuckGoResponse.serializer(), raw)
-        logger.info("DuckDuckGo Controller. Query: $query ; response: ${rawJson.abstractText}")
+        logger.info("query: $query ; response: ${rawJson.abstractText}")
         if (rawJson.abstractText != "") {
-            return rawJson.abstractText.replace("\u0301", "")  // replaces accents
+            return rawJson.abstractText.replace("\u0301", "").replace("•","")  // replaces accents
         } else return null
     }
 
