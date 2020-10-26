@@ -92,7 +92,7 @@ object MainScenario : Scenario() {
             state("WhatDoYouDo") {
                 activators { intent("Ask:WhatDoYouDo") }
                 action {
-                    reactions.say("Я программирую и пишу музыку, а еще я шучу и помогаю людям общаться с незнакомыми людьми и выходить из трудных ситуаций.")
+                    reactions.say("Я помогаю общаться с незнакомыми людьми, выходить из трудных ситуаций и отвечать на каверзные вопросы.")
                     reactions.go("/End")
                 }
             }
