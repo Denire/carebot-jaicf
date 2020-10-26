@@ -59,8 +59,8 @@ val templateBot = BotEngine(
     defaultContextManager = contextManager,
         activationSelector = ContextFirstActivationSelectorPrime(),
     activators = arrayOf(
-        CailaIntentActivator.Factory(cailaNLUSettings),
         RegexActivator,
+        CailaIntentActivator.Factory(cailaNLUSettings),
         CatchAllActivator,
         BaseEventActivator
     )

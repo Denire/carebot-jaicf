@@ -55,6 +55,7 @@ object MainScenario : Scenario() {
             }
             action {
                 logger.info("/Start")
+                reactions.telegram?.say("Спроси меня что-нибудь.")
             }
 
             state("Greet") {
