@@ -11,6 +11,7 @@ import com.justai.jaicf.hook.AfterProcessHook
 import com.justai.jaicf.hook.BeforeProcessHook
 import com.justai.jaicf.hook.BotRequestHook
 import com.justai.jaicf.model.scenario.Scenario
+import com.justai.jaicf.template.controllers.DuckDuckGoController
 import com.justai.jaicf.template.controllers.NoinputController
 import com.justai.jaicf.template.controllers.QuizController
 import com.justai.jaicf.template.controllers.InitiativeController
@@ -75,10 +76,14 @@ object MainScenario : Scenario() {
             state("DuckDuck") {
                 activators { regex(".*(кто такой|кто такая|что такое|кто такие) (?<query>.+)") }
                 action {
-                    val query = activator.regex?.group("query")
-                    if (query != null) {
-                        reactions.say(query.toString())
-                    } else { reactions.say("nothing") }
+                    val q = activator.regex?.group("query")
+                    if (q != null) {
+                        val dc = DuckDuckGoController(context)
+                        val abs = dc.query(q)
+                        if (abs != null) {
+                            reactions.say(abs)
+                        } else { reactions.go("/fallback") }
+                    } else { reactions.go("/fallback") }
                 }
             }
 
