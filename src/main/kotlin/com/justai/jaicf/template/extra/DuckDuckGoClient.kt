@@ -43,9 +43,12 @@ class DuckDuckGoClient() : WithLogger {
     }
 
     fun dirtyCut(s: String): String {
-        val shortS = s.substring(0, 280)
-        val dotIndex = shortS.lastIndexOf('.')
-        return shortS.substring(0, dotIndex+1)
+        if (s.length > 280) {
+            val shortS = s.substring(0, 280)
+            val dotIndex = shortS.lastIndexOf('.')
+            return shortS.substring(0, dotIndex+1)
+        }
+        else return s
     }
 
     fun getDefinition(query: String): String? {
