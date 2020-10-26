@@ -1,5 +1,6 @@
 package com.justai.jaicf.template.scenario
 
+import com.justai.jaicf.activator.regex.regex
 import com.justai.jaicf.channel.aimybox.AimyboxEvent
 import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.channel.aimybox.api.aimybox
@@ -68,6 +69,16 @@ object MainScenario : Scenario() {
                         reactions.say("Все хорошо, спасибо, что интересуешься. Мне приятно быть рядом с тобой.")
                         reactions.go("/End")
                     }
+                }
+            }
+
+            state("DuckDuck") {
+                activators { regex(".*(кто такой|кто такая|что такое|кто такие) (?<query>.+)") }
+                action {
+                    val query = activator.regex?.group("query")
+                    if (query != null) {
+                        reactions.say(query.toString())
+                    } else { reactions.say("nothing") }
                 }
             }
 
