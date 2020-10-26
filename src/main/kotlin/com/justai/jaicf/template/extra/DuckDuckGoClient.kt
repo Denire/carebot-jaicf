@@ -51,10 +51,15 @@ class DuckDuckGoClient() : WithLogger {
     fun getDefinition(query: String): String? {
         val raw = getDefinitionRaw(query) ?: return null
         val rawJson = Json.nonstrict.parse(DuckDuckGoResponse.serializer(), raw)
-        logger.info("query: $query ; response: ${rawJson.abstractText}")
         if (rawJson.abstractText != "") {
-            return dirtyCut(rawJson.abstractText.replace("\u0301", "").replace("•",""))  // replaces accents
-        } else return null
+            val abstractT = dirtyCut(rawJson.abstractText.replace("\u0301", "").replace("•",""))  // replaces accents
+            logger.info("query: $query; response (cut): $abstractT")
+            return abstractT
+        } else
+        {
+            logger.info("no response to query: $query")
+            return null
+        }
     }
 
     private suspend fun defineAsync(text: String): String? {
@@ -70,7 +75,7 @@ class DuckDuckGoClient() : WithLogger {
 
 fun main() {
     val cl = DuckDuckGoClient()
-    print(cl.getDefinition("путин"))
+    print(cl.getDefinition("религия"))
 //    print(cl.clearForTTS("13-й чемпион мира по шахматам"))
 }
 
