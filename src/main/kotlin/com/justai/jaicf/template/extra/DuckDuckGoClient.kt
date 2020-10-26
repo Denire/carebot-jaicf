@@ -11,6 +11,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
+import java.util.regex.Pattern
 
 @Serializable
 data class DuckDuckGoResponse(
@@ -41,12 +42,18 @@ class DuckDuckGoClient() : WithLogger {
         return null
     }
 
+    fun dirtyCut(s: String): String {
+        val shortS = s.substring(0, 280)
+        val dotIndex = shortS.lastIndexOf('.')
+        return shortS.substring(0, dotIndex+1)
+    }
+
     fun getDefinition(query: String): String? {
         val raw = getDefinitionRaw(query) ?: return null
         val rawJson = Json.nonstrict.parse(DuckDuckGoResponse.serializer(), raw)
         logger.info("query: $query ; response: ${rawJson.abstractText}")
         if (rawJson.abstractText != "") {
-            return rawJson.abstractText.replace("\u0301", "").replace("•","")  // replaces accents
+            return dirtyCut(rawJson.abstractText.replace("\u0301", "").replace("•",""))  // replaces accents
         } else return null
     }
 
@@ -63,6 +70,7 @@ class DuckDuckGoClient() : WithLogger {
 
 fun main() {
     val cl = DuckDuckGoClient()
-    print(cl.getDefinition("каспаров"))
+    print(cl.getDefinition("путин"))
+//    print(cl.clearForTTS("13-й чемпион мира по шахматам"))
 }
 
