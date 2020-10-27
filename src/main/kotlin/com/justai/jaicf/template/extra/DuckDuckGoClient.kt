@@ -42,15 +42,19 @@ class DuckDuckGoClient() : WithLogger {
         return null
     }
 
-    fun dirtyCut(s: String): String {
-        if (s.length > 280) {
-            val shortS = s.substring(0, 280)
+    fun dirtyCut(s: String, len: Int = 280): String {
+        val firstDot = s.indexOf('.')
+        if (firstDot == -1) { return s }
+        if (firstDot > len) {
+            return s.substring(0, firstDot+1)
+        } else if (s.length > len) {
+            val shortS = s.substring(0, len)
             val dotIndex = shortS.lastIndexOf('.')
             return shortS.substring(0, dotIndex+1)
         }
         else return s
     }
-
+    
     fun getDefinition(query: String): String? {
         val raw = getDefinitionRaw(query) ?: return null
         val rawJson = Json.nonstrict.parse(DuckDuckGoResponse.serializer(), raw)
@@ -78,7 +82,7 @@ class DuckDuckGoClient() : WithLogger {
 
 fun main() {
     val cl = DuckDuckGoClient()
-    print(cl.getDefinition("религия"))
+    print(cl.getDefinition("каспаров"))
 //    print(cl.clearForTTS("13-й чемпион мира по шахматам"))
 }
 
