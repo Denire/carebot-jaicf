@@ -686,7 +686,7 @@ object MainScenario : Scenario() {
 					", " + this.context.dialogContext.transitions.toString()
             )
             reactions.sayRandom(
-                    "Ох! Сама не знаю!",
+                    "Ох! Даже и не знаю!",
                     "мне кажется, что я перегрелась",
                     "Мой процессор, кажется, перегрелся",
                     "Мне кажется, сейчас на сервере неполадка.",
