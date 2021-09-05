@@ -5,7 +5,8 @@ import com.justai.jaicf.channel.aimybox.AimyboxEvent
 import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.channel.aimybox.api.aimybox
 import com.justai.jaicf.channel.telegram.telegram
-import com.justai.jaicf.channel.jaicp.jaicp
+import com.justai.jaicf.channel.jaicp.channels.ChatApiChannel
+import com.justai.jaicf.channel.jaicp.reactions.chatapi
 import com.justai.jaicf.context.ActionContext
 import com.justai.jaicf.helpers.logging.logger
 import com.justai.jaicf.hook.AfterProcessHook
@@ -504,7 +505,7 @@ object MainScenario : Scenario() {
                     var q = QuizController(context)
                     val (img, place, _) = q.selected
                     logger.info("Selected $place")
-		    reactions.jaicp?.image(img)
+                    reactions.chatapi?.image(img)
                     reactions.aimybox?.image(img)
                     reactions.telegram?.image(img)
                     reactions.say("Как ты думаешь, какой это штат? Техас, Нью Мексико или Флорида.")
