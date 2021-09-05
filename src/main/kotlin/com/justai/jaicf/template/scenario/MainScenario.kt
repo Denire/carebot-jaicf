@@ -5,6 +5,7 @@ import com.justai.jaicf.channel.aimybox.AimyboxEvent
 import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.channel.aimybox.api.aimybox
 import com.justai.jaicf.channel.telegram.telegram
+import com.justai.jaicf.channel.jaicp.jaicp
 import com.justai.jaicf.context.ActionContext
 import com.justai.jaicf.helpers.logging.logger
 import com.justai.jaicf.hook.AfterProcessHook
