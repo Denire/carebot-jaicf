@@ -503,6 +503,7 @@ object MainScenario : Scenario() {
                     var q = QuizController(context)
                     val (img, place, _) = q.selected
                     logger.info("Selected $place")
+		    reactions.image(img)
                     reactions.aimybox?.image(img)
                     reactions.telegram?.image(img)
                     reactions.say("Как ты думаешь, какой это штат? Техас, Нью Мексико или Флорида.")
