@@ -17,6 +17,10 @@ import java.util.regex.Pattern
 data class DuckDuckGoResponse(
     @SerialName("AbstractText") val abstractText: String
 )
+val JSON = Json {
+    encodeDefaults = false
+    ignoreUnknownKeys = true
+}
 
 
 class DuckDuckGoClient() : WithLogger {
@@ -57,7 +61,7 @@ class DuckDuckGoClient() : WithLogger {
     
     fun getDefinition(query: String): String? {
         val raw = getDefinitionRaw(query) ?: return null
-        val rawJson = Json.nonstrict.parse(DuckDuckGoResponse.serializer(), raw)
+        val rawJson = JSON.decodeFromString(DuckDuckGoResponse.serializer(), raw)
         if (rawJson.abstractText != "") {
             val abstractT = dirtyCut(rawJson.abstractText.replace("\u0301", "").replace("•",""))  // replaces accents
             logger.info("query: $query; response (cut): $abstractT")
@@ -69,7 +73,7 @@ class DuckDuckGoClient() : WithLogger {
         }
     }
 
-    private suspend fun defineAsync(text: String): String? {
+    private suspend fun defineAsync(text: String): String {
         return client.get<String>(url) {
             header("Accept-Language", "ru_RU")
             parameter("q", text)

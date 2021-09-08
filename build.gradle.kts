@@ -1,8 +1,8 @@
 plugins {
     application
-    kotlin("jvm") version "1.3.61"
+    kotlin("jvm") version "1.4.21"
     id("com.github.johnrengelman.shadow") version "5.0.0"
-    kotlin("plugin.serialization") version "1.3.61"
+    kotlin("plugin.serialization") version "1.4.21"
 }
 
 group = "com.just-ai.jaicf"
@@ -10,7 +10,7 @@ version = "1.0.0"
 
 val jaicf = "1.1.3"//"0.7.0"
 val slf4j = "1.7.30"
-val ktor = "1.3.1"
+val ktor = "1.5.1"
 
 // Main class to run application on heroku. Either PollingConnectionKt, or WebhookConnectionKt
 application {
@@ -42,7 +42,7 @@ dependencies {
 
     implementation("com.just-ai.jaicf:aimybox:$jaicf")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 
 }
 

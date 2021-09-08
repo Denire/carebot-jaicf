@@ -17,14 +17,12 @@ import com.justai.jaicf.context.manager.mongo.MongoBotContextManager
 import com.justai.jaicf.model.activation.Activation
 import com.justai.jaicf.model.transition.Transition
 import com.justai.jaicf.template.scenario.MainScenario
-import com.mongodb.MongoClient
-import com.mongodb.MongoClientURI
+import com.mongodb.client.MongoClients
 import java.util.*
 
 private val contextManager = System.getenv("MONGODB_URI")?.let { url ->
-    val uri = MongoClientURI(url)
-    val client = MongoClient(uri)
-    MongoBotContextManager(client.getDatabase(uri.database!!).getCollection("contexts"))
+    val client = MongoClients.create(url)
+    MongoBotContextManager(client.getDatabase("jaicf").getCollection("contexts"))
 } ?: InMemoryBotContextManager
 
 val accessToken: String = System.getenv("JAICP_API_TOKEN") ?: Properties().run {
@@ -55,7 +53,7 @@ class ContextFirstActivationSelectorPrime : ActivationSelector {
 }
 
 val templateBot = BotEngine(
-    model = MainScenario.model,
+    scenario = MainScenario,
     defaultContextManager = contextManager,
         activationSelector = ContextFirstActivationSelectorPrime(),
     activators = arrayOf(
