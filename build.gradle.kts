@@ -5,16 +5,16 @@ plugins {
     kotlin("plugin.serialization") version "1.3.61"
 }
 
-group = "com.justai.jaicf"
+group = "com.just-ai.jaicf"
 version = "1.0.0"
 
-val jaicf = "0.7.0"
+val jaicf = "1.1.3"//"0.7.0"
 val slf4j = "1.7.30"
 val ktor = "1.3.1"
 
 // Main class to run application on heroku. Either PollingConnectionKt, or WebhookConnectionKt
 application {
-    mainClassName = "com.justai.jaicf.template.connections.AimyboxAndWebhookConnectionKt"
+    mainClassName = "com.just-ai.jaicf.template.connections.AimyboxAndWebhookConnectionKt"
 
 }
 
@@ -31,16 +31,16 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:$slf4j")
     implementation("org.slf4j:slf4j-log4j12:$slf4j")
 
-    implementation("com.justai.jaicf:core:$jaicf")
-    implementation("com.justai.jaicf:mongo:$jaicf")
-    implementation("com.justai.jaicf:jaicp:$jaicf")
-    implementation("com.justai.jaicf:caila:$jaicf")
+    implementation("com.just-ai.jaicf:core:$jaicf")
+    implementation("com.just-ai.jaicf:mongo:$jaicf")
+    implementation("com.just-ai.jaicf:jaicp:$jaicf")
+    implementation("com.just-ai.jaicf:caila:$jaicf")
 
-    implementation("com.justai.jaicf:telegram:$jaicf")
+    implementation("com.just-ai.jaicf:telegram:$jaicf")
 
     implementation("io.ktor:ktor-server-netty:$ktor")
 
-    implementation("com.justai.jaicf:aimybox:$jaicf")
+    implementation("com.just-ai.jaicf:aimybox:$jaicf")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0")
 
